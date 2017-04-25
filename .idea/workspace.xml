@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef6b02f8-c57b-4b4f-b818-2bab08d3152d" name="Default" comment="test">
+    <list default="true" id="ef6b02f8-c57b-4b4f-b818-2bab08d3152d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -133,6 +133,19 @@
         <entry key="$PROJECT_DIR$" value="testing" />
       </map>
     </option>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="testing" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -597,7 +610,7 @@
       <updated>1493025312819</updated>
       <workItem from="1493025316643" duration="19185000" />
       <workItem from="1493125846332" duration="1425000" />
-      <workItem from="1493138396120" duration="1576000" />
+      <workItem from="1493138396120" duration="1658000" />
     </task>
     <task id="LOCAL-00001" summary="Just testing some stuff">
       <created>1493151923351</created>
@@ -613,11 +626,18 @@
       <option name="project" value="LOCAL" />
       <updated>1493152072956</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test">
+      <created>1493152234573</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1493152234573</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22186000" />
+    <option name="totallyTimeSpent" value="22268000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
