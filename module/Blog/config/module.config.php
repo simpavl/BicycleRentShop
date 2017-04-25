@@ -10,9 +10,28 @@ namespace Blog;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 
 return [
     // The following section is new and should be added to your file:
+	'doctrine' => [
+
+    'driver' => [
+        'Blog_driver' => [
+            'class' => AnnotationDriver::class,
+            'cache' => 'array',
+            'paths' => [
+                __DIR__ . '/../src/Entity',
+            ],
+        ],
+        'orm_default' => [
+            'drivers' => [
+                'Blog\\Entity' => 'Blog_driver',
+            ],
+        ],
+    ],
+],
     'router' => [
         'routes' => [
             'blog' => [
@@ -33,7 +52,7 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         ],
     ],
     'view_manager' => [

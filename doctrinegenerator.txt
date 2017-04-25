@@ -1,0 +1,2 @@
+doctrine-module orm:convert-mapping --namespace="Shop\Entity\\" --force  --from-database annotation ./module/Shop/src/ --filter User
+doctrine-module orm:generate-entities ./module/Shop/src/ --generate-annotations=true

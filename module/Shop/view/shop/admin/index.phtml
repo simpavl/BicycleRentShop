@@ -1,0 +1,85 @@
+<h1>Manage Categories</h1>
+
+
+<p>
+    <a class="btn btn-default" href="
+        <?= $this->url('admin', ['action'=>'add-category'])?>">
+        New Category
+    </a>
+</p>
+
+<table class="table table-striped">
+
+    <tr>
+        <th>ID</th>
+        <th>Category Name</th>
+        <th>Actions</th>
+    </tr>
+
+    <?php foreach ($categories as $category): ?>
+    <tr>
+        <td><?= $this->escapeHtml($category->getId()); ?></td>
+        <td><?= $this->escapeHtml($category->getName()); ?></td>
+        <td>
+            <a class="btn btn-info" href="<?= $this->url('admin',
+                ['action'=>'edit-category', 'id'=>$category->getId()]); ?>">
+                <span class="glyphicon glyphicon-pencil" ></span> Edit
+            </a>
+            <a class="btn btn-danger" href="<?= $this->url('admin',
+                ['action'=>'delete-category', 'id'=>$category->getId()]); ?>">
+                <span class="glyphicon glyphicon-remove"></span> Delete
+            </a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
+<h1>Manage Users</h1>
+
+
+<p>
+    <a class="btn btn-default" href="
+    <?= $this->url('admin', ['action'=>'add-user']); ?>">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New User
+    </a>
+</p>
+
+<table class="table table-striped">
+
+    <tr>
+        <th>ID</th>
+        <th>E-mail</th>
+        <th>Full Name</th>
+        <th>Status</th>
+        <th>Gender</th>
+        <th>Actions</th>
+    </tr>
+
+    <?php foreach ($users as $user): ?>
+
+        <tr>
+            <td><?= $this->escapeHtml($user->getId()); ?></td>
+            <td>
+                <a href="<?= $this->url('admin', ['action'=>'view-user', 'id'=>$user->getId()]); ?>">
+                    <?= $this->escapeHtml($user->getEmail()); ?>
+                </a>
+            </td>
+            <td><?= $this->escapeHtml($user->getFullName()); ?></a>
+            </td>
+            <td><?= $this->escapeHtml($user->getStatusAsString()); ?></td>
+            <td><?= $this->escapeHtml($user->getGenderAsString()); ?></td>
+            <td>
+                <a class="btn btn-info" href="<?= $this->url('admin',
+                    ['action'=>'edit-user', 'id'=>$user->getId()]); ?>">
+                    <span class="glyphicon glyphicon-pencil" ></span> Edit
+                </a>
+                <a class="btn btn-default" href="<?= $this->url('admin',
+                    ['action'=>'change-password', 'id'=>$user->getId()]); ?>">
+                    <span class="glyphicon glyphicon-asterisk"></span> Change Password
+                </a>
+            </td>
+        </tr>
+
+    <?php endforeach; ?>
+
+</table>

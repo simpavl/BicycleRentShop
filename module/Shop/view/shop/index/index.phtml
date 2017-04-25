@@ -1,0 +1,12 @@
+<h1> Categories</h1>
+
+
+<?php foreach($catid as $cat): ?>
+
+    <h3>
+        <a href="#">
+            <?= $this->escapeHtml($cat->getName()); ?>
+        </a>
+    </h3>
+
+<?php endforeach; ?>
