@@ -236,9 +236,6 @@ class AdminController extends AbstractActionController
             'form' => $form
         ));
     }
-    public function changeUserPasswordAction()
-    {
 
-    }
 
 }
