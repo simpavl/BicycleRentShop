@@ -1,3 +1,12 @@
+<h3 style="font-style: italic;">
+    You are logged in as <?= $this->escapeHtml($this->identity()) ?>
+</h3>
+<a class="btn btn-danger" href="<?= $this->url('user',
+    ['action'=>'logout'],['query'=>['redirectUrl'=>'user']]); ?>">
+    <span class="glyphicon glyphicon-remove" ></span> Logout
+</a>
+
+
 <h1>Manage Categories</h1>
 
 

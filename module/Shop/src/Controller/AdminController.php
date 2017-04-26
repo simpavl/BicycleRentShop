@@ -49,10 +49,19 @@ class AdminController extends AbstractActionController
     {
         $categories = $this->entityManager->getRepository(Category::class)->findBy([], ['id'=>'ASC']);
         $users = $this->entityManager->getRepository(User::class)->findBy([], ['id' => 'ASC']);
+        if ($this->identity()!=null) {
+            // Пользователь вошел на свой аккаунт.
+
+            // Извлекаем личность пользователя.
+            $userEmail = $this->identity();
+        } else{
+            $userEmail = null;
+        }
         return new ViewModel([
             'categories' => $categories,
             'categoryManager' => $this->categoryManager,
-            'users' => $users
+            'users' => $users,
+            'userEmail' => $userEmail
         ]);
     }
 

@@ -9,7 +9,7 @@ use Zend\InputFilter\InputFilter;
 use Shop\Entity\Category;
 
 
-class addCategoryForm extends Form
+class CategoryForm extends Form
 {
     public function __construct()
     {
