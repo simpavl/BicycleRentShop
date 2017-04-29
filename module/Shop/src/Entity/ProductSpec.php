@@ -5,29 +5,13 @@ namespace Shop\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ProductsSpecs
+ * ProductSpec
  *
- * @ORM\Table(name="products_specs")
+ * @ORM\Table(name="product_spec", indexes={@ORM\Index(name="specs_category_id", columns={"specs_category_id"})})
  * @ORM\Entity
  */
 class ProductSpec
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="product_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $productId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="specs_category_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     */
-    private $specsCategoryId;
-
     /**
      * @var string
      *
@@ -35,40 +19,28 @@ class ProductSpec
      */
     private $description;
 
+    /**
+     * @var \Shop\Entity\Product
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Shop\Entity\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $product;
 
     /**
-     * Get productId
+     * @var \Shop\Entity\ProductSpecCategory
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="Shop\Entity\ProductSpecCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="specs_category_id", referencedColumnName="id", nullable=true)
+     * })
      */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
+    private $specsCategory;
 
-    /**
-     * Set specsCategoryId
-     *
-     * @param integer $specsCategoryId
-     *
-     * @return ProductSpec
-     */
-    public function setSpecsCategoryId($specsCategoryId)
-    {
-        $this->specsCategoryId = $specsCategoryId;
-
-        return $this;
-    }
-
-    /**
-     * Get specsCategoryId
-     *
-     * @return integer
-     */
-    public function getSpecsCategoryId()
-    {
-        return $this->specsCategoryId;
-    }
 
     /**
      * Set description
@@ -92,6 +64,54 @@ class ProductSpec
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \Shop\Entity\Product $product
+     *
+     * @return ProductSpec
+     */
+    public function setProduct(\Shop\Entity\Product $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Shop\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set specsCategory
+     *
+     * @param \Shop\Entity\ProductSpecCategory $specsCategory
+     *
+     * @return ProductSpec
+     */
+    public function setSpecsCategory(\Shop\Entity\ProductSpecCategory $specsCategory = null)
+    {
+        $this->specsCategory = $specsCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get specsCategory
+     *
+     * @return \Shop\Entity\ProductSpecCategory
+     */
+    public function getSpecsCategory()
+    {
+        return $this->specsCategory;
     }
 }
 

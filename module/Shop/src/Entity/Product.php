@@ -5,9 +5,9 @@ namespace Shop\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Products
+ * Product
  *
- * @ORM\Table(name="products")
+ * @ORM\Table(name="product", indexes={@ORM\Index(name="brand_id", columns={"brand_id"}), @ORM\Index(name="category_id", columns={"category_id"})})
  * @ORM\Entity
  */
 class Product
@@ -36,13 +36,6 @@ class Product
     private $price;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="category_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     */
-    private $categoryId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, precision=0, scale=0, nullable=false, unique=false)
@@ -50,11 +43,24 @@ class Product
     private $description;
 
     /**
-     * @var integer
+     * @var \Shop\Entity\Brand
      *
-     * @ORM\Column(name="brand_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\ManyToOne(targetEntity="Shop\Entity\Brand")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="brand_id", referencedColumnName="id", nullable=true)
+     * })
      */
-    private $brandId;
+    private $brand;
+
+    /**
+     * @var \Shop\Entity\Category
+     *
+     * @ORM\ManyToOne(targetEntity="Shop\Entity\Category")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $category;
 
 
     /**
@@ -116,30 +122,6 @@ class Product
     }
 
     /**
-     * Set categoryId
-     *
-     * @param integer $categoryId
-     *
-     * @return Product
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
-
-    /**
-     * Get categoryId
-     *
-     * @return integer
-     */
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -164,27 +146,51 @@ class Product
     }
 
     /**
-     * Set brandId
+     * Set brand
      *
-     * @param integer $brandId
+     * @param \Shop\Entity\Brand $brand
      *
      * @return Product
      */
-    public function setBrandId($brandId)
+    public function setBrand(\Shop\Entity\Brand $brand = null)
     {
-        $this->brandId = $brandId;
+        $this->brand = $brand;
 
         return $this;
     }
 
     /**
-     * Get brandId
+     * Get brand
      *
-     * @return integer
+     * @return \Shop\Entity\Brand
      */
-    public function getBrandId()
+    public function getBrand()
     {
-        return $this->brandId;
+        return $this->brand;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Shop\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\Shop\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Shop\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }
 

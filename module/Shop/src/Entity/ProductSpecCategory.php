@@ -5,9 +5,9 @@ namespace Shop\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ProductsSpecsCategory
+ * ProductSpecCategory
  *
- * @ORM\Table(name="products_specs_category")
+ * @ORM\Table(name="product_spec_category")
  * @ORM\Entity
  */
 class ProductSpecCategory

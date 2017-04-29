@@ -84,7 +84,7 @@ return [
     ],
     // The 'access_filter' key is used by the User module to restrict or permit
     // access to certain controller actions for unauthorized visitors.
-    'access_filter' => [
+    /*'access_filter' => [
         'controllers' => [
             Controller\AdminController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
@@ -92,6 +92,22 @@ return [
                 ['actions' => [''], 'allow' => '*' ],
                 // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
                 ['actions' => ['index', 'add-category', 'edit-category', 'delete-category','users-list', 'add-user', 'view-user', 'edit-user'], 'allow' => '@']
+            ],
+            Controller\IndexController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                ['actions' => [''], 'allow' => '*' ],
+                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
+                ['actions' => ['index', 'add-category', 'edit-category', 'delete-category','users-list', 'add-user', 'view-user', 'edit-user'], 'allow' => '@']
+            ],
+        ]
+    ],*/
+    'access_filter' => [
+        'controllers' => [
+            Controller\AdminController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                'user' => ['index'], 'admin' => ['index', 'add-category', 'edit-category', 'delete-category','users-list', 'add-user', 'view-user', 'edit-user'],
             ],
         ]
     ],

@@ -52,14 +52,14 @@ class User
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthdate", type="date", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="birthdate", type="date", precision=0, scale=0, nullable=true, unique=false)
      */
     private $birthdate;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="gender", type="string", length=100, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="gender", type="boolean", precision=0, scale=0, nullable=false, unique=false)
      */
     private $gender;
 
@@ -204,7 +204,7 @@ class User
     /**
      * Set gender
      *
-     * @param string $gender
+     * @param boolean $gender
      *
      * @return User
      */
@@ -218,7 +218,7 @@ class User
     /**
      * Get gender
      *
-     * @return string
+     * @return boolean
      */
     public function getGender()
     {

@@ -1,40 +1,66 @@
 <?php
 
 namespace Shop\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * This class represents a single post in a blog.
- * @ORM\Entity
+ * Category
+ *
  * @ORM\Table(name="category")
+ * @ORM\Entity
  */
 class Category
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="id")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @ORM\Column(name="name")
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, precision=0, scale=0, nullable=false, unique=false)
      */
-    protected $name;
+    private $name;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Category
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
-
-    public function setName($name)
-    {
-        $this->name= $name;
-    }
 }
+

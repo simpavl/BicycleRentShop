@@ -5,9 +5,9 @@ namespace Shop\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Brands
+ * Brand
  *
- * @ORM\Table(name="brands")
+ * @ORM\Table(name="brand")
  * @ORM\Entity
  */
 class Brand

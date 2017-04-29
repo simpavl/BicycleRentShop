@@ -52,9 +52,6 @@ class Module
 
         // Получаем экземпляр сервиса AuthManager.
         $authManager = $event->getApplication()->getServiceManager()->get(AuthManager::class);
-
-        // Выполняем фильтр доступа для каждого контроллера кроме AuthController
-        // (чтобы избежать бесконечного перенаправления).
         if ($controllerName!=UserController::class &&
             !$authManager->filterAccess($controllerName, $actionName)) {
 
@@ -73,5 +70,25 @@ class Module
             return $controller->redirect()->toRoute('user',[],
                 ['query'=>['redirectUrl'=>$redirectUrl]]);
         }
+        // Выполняем фильтр доступа для каждого контроллера кроме AuthController
+        // (чтобы избежать бесконечного перенаправления).
+        /*if ($controllerName!=UserController::class &&
+            !$authManager->filterAccess($controllerName, $actionName)) {
+
+            // Запоминаем URL страницы, к которой пытался обратиться пользователь. Мы перенаправим пользователя
+            // на этот URL после успешной авторизации.
+            $uri = $event->getApplication()->getRequest()->getUri();
+            // Делаем URL относительным (убираем схему, информацию о пользователе, имя хоста и порт),
+            // чтобы избежать перенаправления на другой домен недоброжелателем.
+            $uri->setScheme(null)
+                ->setHost(null)
+                ->setPort(null)
+                ->setUserInfo(null);
+            $redirectUrl = $uri->toString();
+
+            // Перенаправляем пользователя на страницу "Login".
+            return $controller->redirect()->toRoute('user',[],
+                ['query'=>['redirectUrl'=>$redirectUrl]]);
+        }*/
     }
 }

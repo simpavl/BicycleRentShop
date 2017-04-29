@@ -77,7 +77,7 @@ class UserController extends AbstractActionController
             $form->setData($data);
 
             // Валидируем форму
-            if($form->isValid()) {
+            if ($form->isValid()) {
 
                 // Получаем отфильтрованные и валидированные данные
                 $data = $form->getData();
@@ -86,34 +86,37 @@ class UserController extends AbstractActionController
                 $result = $this->authManager->login($data['email'],
                     $data['password'], $data['remember_me']);
 
+               // $this->auth()->authenticate($data['email'], $data['password']);
+
+
                 // Проверяем результат.
-                if ($result->getCode() == Result::SUCCESS) {
+                 if ($result->getCode() == Result::SUCCESS) {
 
-                    // Получаем URL перенаправления.
-                    $redirectUrl = $this->params()->fromPost('redirect_url', '');
+                     // Получаем URL перенаправления.
+                     $redirectUrl = $this->params()->fromPost('redirect_url', '');
 
-                    if (!empty($redirectUrl)) {
-                        // Проверка ниже нужна для предотвращения возможных атак перенаправления
-                        // (когда кто-то пытается перенаправить пользователя на другой домен).
-                        $uri = new Uri($redirectUrl);
-                        if (!$uri->isValid() || $uri->getHost()!=null)
-                            throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
-                    }
+                     if (!empty($redirectUrl)) {
+                         // Проверка ниже нужна для предотвращения возможных атак перенаправления
+                         // (когда кто-то пытается перенаправить пользователя на другой домен).
+                         $uri = new Uri($redirectUrl);
+                         if (!$uri->isValid() || $uri->getHost()!=null)
+                             throw new \Exception('Incorrect redirect URL: ' . $redirectUrl);
+                     }
 
-                    // Если задан URL перенаправления, перенаправляем на него пользователя;
-                    // иначе перенаправляем пользователя на страницу Home.
-                    if(empty($redirectUrl)) {
-                        return $this->redirect()->toRoute('home');
-                    } else {
-                        $this->redirect()->toUrl($redirectUrl);
-                    }
-                } else {
-                    $isLoginError = true;
-                }
-            } else {
-                $isLoginError = true;
-            }
-        }
+                     // Если задан URL перенаправления, перенаправляем на него пользователя;
+                     // иначе перенаправляем пользователя на страницу Home.
+                     if(empty($redirectUrl)) {
+                         return $this->redirect()->toRoute('home');
+                     } else {
+                         $this->redirect()->toUrl($redirectUrl);
+                     }
+                 } else {
+                     $isLoginError = true;
+                 }
+             } else {
+                 $isLoginError = true;
+             }
+         }
 
         return new ViewModel([
             'form' => $form,

@@ -24,10 +24,12 @@ return [
     'Zend\Router',
     'Zend\Validator',
     'ZendDeveloperTools',
+	/*'CirclicalUser',*/
     'DoctrineModule',
     'DoctrineORMModule',
     'LayoutChange',
     'Application',
-	'Shop',
+    'Shop',
+	/*'Testmodule',*/
     'Album',
 ];

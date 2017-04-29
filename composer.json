@@ -28,7 +28,8 @@
         "zendframework/zend-crypt": "^3.2",
         "zendframework/zend-math": "^3.0",
         "zendframework/zend-authentication": "^2.5",
-        "zendframework/zend-mvc-plugins": "^1.0"
+        "zendframework/zend-mvc-plugins": "^1.0",
+        "zendframework/zend-permissions-acl": "^2.6"
 		
     },
     "autoload": {
@@ -37,7 +38,8 @@
 			"Album\\": "module/Album/src/",
             "Blog\\": "module/Blog/src/",
             "ZFT\\": "module/ZFT/src/",
-			"Shop\\": "module/Shop/src/"
+			"Shop\\": "module/Shop/src/",
+			"Testmodule\\": "module/Testmodule/src/"
 
         }
     },

@@ -38,4 +38,26 @@ return [
     'session_storage' => [
         'type' => SessionArrayStorage::class
     ],
+	'circlical' => [
+        'user' => [
+            'guards' => [
+                'ModuleName' => [
+                    "controllers" => [
+                        \Application\Controller\IndexController::class => [
+                            'default' => [], // anyone can access
+                        ],
+                        \Shop\Controller\UserController::class => [
+                            'default' => [], // specific role access
+                        ],
+                        \Testmodule\Controller\UserController::class => [
+                            'default' => [],
+                            'actions' => [  // action-level guards
+                                'list' => [ 'user' ], // role 'user' can access 'listAction' on AdminController
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];

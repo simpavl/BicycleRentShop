@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Category
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="id", type="string", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,7 +24,7 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="name", type="string", length=100, precision=0, scale=0, nullable=false, unique=false)
      */
     private $name;
 
@@ -32,7 +32,7 @@ class Category
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
