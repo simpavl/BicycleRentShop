@@ -32,4 +32,5 @@ return [
     'Shop',
 	/*'Testmodule',*/
     'Album',
+	'ShoppingCart'
 ];

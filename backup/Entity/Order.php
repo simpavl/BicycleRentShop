@@ -65,7 +65,7 @@ class Order
      *
      * @param integer $productId
      *
-     * @return Order
+     * @return Orders
      */
     public function setProductId($productId)
     {
@@ -89,7 +89,7 @@ class Order
      *
      * @param integer $userId
      *
-     * @return Order
+     * @return Orders
      */
     public function setUserId($userId)
     {
@@ -113,7 +113,7 @@ class Order
      *
      * @param integer $paymentTypeId
      *
-     * @return Order
+     * @return Orders
      */
     public function setPaymentTypeId($paymentTypeId)
     {
@@ -137,7 +137,7 @@ class Order
      *
      * @param string $ordercost
      *
-     * @return Order
+     * @return Orders
      */
     public function setOrdercost($ordercost)
     {

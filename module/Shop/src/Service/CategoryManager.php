@@ -3,6 +3,7 @@
 namespace Shop\Service;
 
 use Shop\Entity\Category;
+use Shop\Entity\Subcategory;
 use Zend\Filter\StaticFilter;
 
 class CategoryManager
@@ -35,6 +36,28 @@ class CategoryManager
     public function removeCategory($category)
     {
         $this->entityManager->remove($category);
+        $this->entityManager->flush();
+    }
+    public function addNewSubCategory($data)
+    {
+        $subcategory = new Subcategory();
+        $category = $this->entityManager->getRepository(Category::class)->findOneById($data['category']);
+        $subcategory->setCategory($category);
+        $subcategory->setName($data['name']);
+
+        $this->entityManager->persist($subcategory);
+        $this->entityManager->flush();
+    }
+    public function updateSubCategory($subcategory,$data)
+    {
+        $category = $this->entityManager->getRepository(Category::class)->findOneById($data['category']);
+        $subcategory->setCategory($category);
+        $subcategory->setName($data['name']);
+        $this->entityManager->flush();
+    }
+    public function removeSubCategory($subcategory)
+    {
+        $this->entityManager->remove($subcategory);
         $this->entityManager->flush();
     }
 }

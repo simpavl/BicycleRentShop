@@ -12,6 +12,7 @@ use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\DBAL\Driver\PDOSqlite\Driver;
+use ShoppingCart\Controller\Plugin\ShoppingCart;
 
 return [
     'router' => [
@@ -58,6 +59,48 @@ return [
                     ],
                 ],
             ],
+            'product' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' => '/product[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\ProductController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'cart' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' => '/cart[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\CartController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'order' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' => '/order[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\OrderController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -65,6 +108,9 @@ return [
             Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
             Controller\AdminController::class => Controller\Factory\AdminControllerFactory::class,
             Controller\UserController::class => Controller\Factory\UserControllerFactory::class,
+            Controller\ProductController::class => Controller\Factory\ProductControllerFactory::class,
+            Controller\CartController::class => Controller\Factory\CartControllerFactory::class,
+            Controller\OrderController::class => Controller\Factory\OrderControllerFactory::class,
         ],
     ],
     'view_manager' => [
@@ -77,9 +123,11 @@ return [
             \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
             Service\CategoryManager::class => Service\Factory\CategoryManagerFactory::class,
             Service\UserManager::class=>Service\Factory\UserManagerFactory::class,
-            Service\UserManager::class=>Service\Factory\UserManagerFactory::class,
+            Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
+            Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
+
         ],
     ],
     // The 'access_filter' key is used by the User module to restrict or permit
@@ -104,10 +152,37 @@ return [
     ],*/
     'access_filter' => [
         'controllers' => [
+            Controller\IndexController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                'user' => ['index'],
+                'admin' => [''],
+            ],
             Controller\AdminController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                'user' => ['index'], 'admin' => ['index', 'add-category', 'edit-category', 'delete-category','users-list', 'add-user', 'view-user', 'edit-user'],
+                'user' => ['index'],
+                'admin' => ['index', 'editSubCategory', 'addCategory', 'editCategory',
+                    'deleteCategory','usersList', 'addUser', 'viewUser', 'editUser','editSubCategory',
+                    'addSubCategory','addProduct','editProduct'],
+            ],
+            Controller\ProductController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                'user' => ['index','view'],
+                'admin' => ['index', 'test'],
+            ],
+            Controller\CartController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                'user' => ['index'],
+                'admin' => ['index'],
+            ],
+            Controller\OrderController::class => [
+                // Give access to "resetPassword", "message" and "setPassword" actions
+                // to anyone.
+                'user' => ['index'],
+                'admin' => ['index'],
             ],
         ]
     ],

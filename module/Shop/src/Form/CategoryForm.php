@@ -6,14 +6,14 @@ use Zend\Form\Form;
 
 use Zend\InputFilter\InputFilter;
 
-use Shop\Entity\Category;
+
 
 
 class CategoryForm extends Form
 {
     public function __construct()
     {
-        parent::__construct('addCategory-form');
+        parent::__construct('category-form');
 
         $this->setAttribute('method', 'post');
 

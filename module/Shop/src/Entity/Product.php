@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Product
  *
- * @ORM\Table(name="product", indexes={@ORM\Index(name="brand_id", columns={"brand_id"}), @ORM\Index(name="category_id", columns={"category_id"})})
+ * @ORM\Table(name="product", indexes={@ORM\Index(name="brand_id", columns={"brand_id"}), @ORM\Index(name="category_id", columns={"category_id"}), @ORM\Index(name="subcategory_id", columns={"subcategory_id"})})
  * @ORM\Entity
  */
 class Product
@@ -53,6 +53,16 @@ class Product
     private $brand;
 
     /**
+     * @var \Shop\Entity\Subcategory
+     *
+     * @ORM\ManyToOne(targetEntity="Shop\Entity\Subcategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $subcategory;
+	
+	/**
      * @var \Shop\Entity\Category
      *
      * @ORM\ManyToOne(targetEntity="Shop\Entity\Category")
@@ -62,6 +72,12 @@ class Product
      */
     private $category;
 
+	/**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $quantity;
 
     /**
      * Get id
@@ -170,9 +186,32 @@ class Product
     }
 
     /**
+     * Set subcategory
+     *
+     * @param \Shop\Entity\Subcategory $subcategory
+     *
+     * @return Product
+     */
+    public function setSubCategory(\Shop\Entity\Subcategory $subcategory = null)
+    {
+        $this->subcategory = $subcategory;
+
+        return $this;
+    }
+
+    /**
+     * Get subcategory
+     *
+     * @return \Shop\Entity\Subcategory
+     */
+    public function getSubCategory()
+    {
+        return $this->subcategory;
+    }
+	/**
      * Set category
      *
-     * @param \Shop\Entity\Category $category
+     * @param \Shop\Entity\Subcategory $subcategory
      *
      * @return Product
      */
@@ -191,6 +230,30 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+	
+	/**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Product
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }
 

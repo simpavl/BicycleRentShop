@@ -6,6 +6,7 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 use Shop\Controller\AdminController;
 use Shop\Service\CategoryManager;
 use Shop\Service\UserManager;
+use Shop\Service\ProductManager;
 
 class AdminControllerFactory implements FactoryInterface
 {
@@ -14,7 +15,8 @@ class AdminControllerFactory implements FactoryInterface
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $categoryManager = $container->get(CategoryManager::class);
         $userManager = $container->get(UserManager::class);
+        $productManager = $container->get(ProductManager::class);
 
-        return new AdminController($entityManager, $categoryManager, $userManager);
+        return new AdminController($entityManager, $categoryManager, $userManager, $productManager);
     }
 }
