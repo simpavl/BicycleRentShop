@@ -1,0 +1,57 @@
+<!-- /.row -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Manage Categories</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Order costs</th>
+                        <th>Order status</th>
+                        <th>Products count</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    <?php foreach ($orders as $order): ?>
+
+                        <tr>
+                            <td><?= $this->escapeHtml($order->getId()); ?></td>
+                            <td><?= $this->escapeHtml($order->getUser()->getEmail()); ?></td>
+                            <td><?= $this->escapeHtml($order->getOrdercost()); ?></td>
+                            <td><?= $this->escapeHtml($order->getStatus()->getName()); ?></td>
+                            <td><?= $this->escapeHtml(count($order->getProducts())); ?></td>
+                            <td>
+                                <a class="btn btn-info" href="<?= $this->url('admin',
+                                    ['action'=>'edit-order', 'id'=>$order->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-pencil" ></span> Edit
+                                </a>
+                                <a class="btn btn-default" href="<?= $this->url('admin',
+                                    ['action'=>'delete-order', 'id'=>$order->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-asterisk"></span> Delete product
+                                </a>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<!-- /.row -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Manage Categories</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Subcategory</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    <?php foreach ($products as $product): ?>
+
+                        <tr>
+                            <td><?= $this->escapeHtml($product->getId()); ?></td>
+                            <td><?= $this->escapeHtml($product->getName()); ?></td>
+                            <td><?= $this->escapeHtml($product->getPrice()); ?></td>
+                            <td><?= $this->escapeHtml($product->getSubcategory()->getName()); ?></td>
+                            <td><?= $this->escapeHtml($product->getCategory()->getName()); ?></td>
+                            <td><?= $this->escapeHtml($product->getQuantity()); ?></td>
+                            <td>
+                                <a class="btn btn-info" href="<?= $this->url('admin',
+                                    ['action'=>'edit-product', 'id'=>$product->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-pencil" ></span> Edit
+                                </a>
+                                <a class="btn btn-default" href="<?= $this->url('admin',
+                                    ['action'=>'delete-product', 'id'=>$product->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-asterisk"></span> Delete product
+                                </a>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
