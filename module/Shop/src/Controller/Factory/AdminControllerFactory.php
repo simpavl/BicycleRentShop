@@ -16,7 +16,7 @@ class AdminControllerFactory implements FactoryInterface
         $categoryManager = $container->get(CategoryManager::class);
         $userManager = $container->get(UserManager::class);
         $productManager = $container->get(ProductManager::class);
-
-        return new AdminController($entityManager, $categoryManager, $userManager, $productManager);
+        $authenticationService = $container->get(\Zend\Authentication\AuthenticationService::class);
+        return new AdminController($entityManager, $categoryManager, $userManager, $productManager, $authenticationService);
     }
 }

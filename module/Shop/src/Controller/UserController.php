@@ -3,6 +3,8 @@
 namespace Shop\Controller;
 
 use Shop\Entity\User;
+use Shop\Form\UserManageForm;
+use Shop\Service\Factory\UserManagerFactory;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\Result;
@@ -130,5 +132,38 @@ class UserController extends AbstractActionController
         $this->authManager->logout();
 
         return $this->redirect()->toRoute('user');
+    }
+
+    public function cabinetAction()
+    {
+        if ($this->authService->hasIdentity()) {
+            $form = new UserManageForm();
+            $user = $this->entityManager->getRepository(User::class)->findOneByEmail($this->authService->getIdentity());
+            if ($this->getRequest()->isPost()) {
+                $data = $this->params()->fromPost();
+
+                $form->setData($data);
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $this->userManager->editUser($user, $data);
+
+
+                    //return $this->redirect()->toRoute('admin');
+                }
+            }
+            else {
+                $data = [
+                    'first_name' => $user->getFirstname(),
+                    'last_name' => $user->getSurname(),
+                    'gender' => $user->getGenderAsString()
+                ];
+                $form->setData($data);
+            }
+            return new ViewModel(
+                [
+                    'form' => $form
+                ]);
+        }
+    else return $this->redirect()->toRoute('user');
     }
 }

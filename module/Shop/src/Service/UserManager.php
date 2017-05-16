@@ -82,4 +82,13 @@ class UserManager
 
         return $user !== null;
     }
+
+    public function editUser($user, $data)
+    {
+        $user->setFirstname($data['first_name']);
+        $user->setSurname($data['last_name']);
+        $user->setGender($data['gender']);
+        $this->entityManager->flush();
+    }
+
 }

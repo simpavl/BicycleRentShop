@@ -10,6 +10,8 @@ use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Controller\AbstractActionController;
 use Shop\Controller\UserController;
 use Shop\Service\AuthManager;
+use Zend\ModuleManager\ModuleManager;
+
 
 
 class Module
@@ -23,6 +25,19 @@ class Module
 * Этот метод вызывается после завершения самозагрузки MVC и позволяет
 * регистрировать обработчики событий.
 */
+    public function init(ModuleManager $manager)
+    {
+        $events = $manager->getEventManager();
+        $sharedEvents = $events->getSharedManager();
+        $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e) {
+            $controller = $e->getTarget();
+            if (get_class($controller) == 'Shop\Controller\AdminController')         {
+                $controller->layout('layout/admin');
+            }
+        }, 100);
+
+    }
+
     public function onBootstrap(MvcEvent $event)
     {
         // Получаем менеджер событий.

@@ -114,6 +114,9 @@ return [
         ],
     ],
     'view_manager' => [
+        'template_map' => [
+            'layout/admin'           => __DIR__ . '/../view/layout/layout.phtml',
+        ],
         'template_path_stack' => [
             'shop' => __DIR__ . '/../view',
         ],
@@ -127,6 +130,7 @@ return [
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
+            'navigation' => Zend\Navigation\Service\DefaultNavigationFactory::class,
 
         ],
     ],
@@ -164,7 +168,7 @@ return [
                 'user' => ['index'],
                 'admin' => ['index', 'editSubCategory', 'addCategory', 'editCategory',
                     'deleteCategory','usersList', 'addUser', 'viewUser', 'editUser','editSubCategory',
-                    'addSubCategory','addProduct','editProduct'],
+                    'addSubCategory','addProduct','editProduct','categories','subcategories','users','products','orders'],
             ],
             Controller\ProductController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
@@ -199,5 +203,64 @@ return [
                 ]
             ]
         ]
-    ]
+    ],
+    'navigation' => [
+        'default' => [
+            [
+                'label' => 'Home',
+                'route' => 'admin',
+                'pages' => [
+                    [
+                        'label'  => 'Add category',
+                        'route'  => 'admin',
+                        'action' => 'add-category',
+                    ],
+                    [
+                        'label'  => 'Categories',
+                        'route'  => 'admin',
+                        'action' => 'categories',
+                    ],
+                    [
+                        'label'  => 'Subcategories',
+                        'route'  => 'admin',
+                        'action' => 'subcategories',
+                    ],
+                    [
+                        'label'  => 'Add subcategory',
+                        'route'  => 'admin',
+                        'action' => 'add-sub-category',
+                    ],
+                    [
+                        'label'  => 'Users',
+                        'route'  => 'admin',
+                        'action' => 'users',
+                    ],
+                    [
+                        'label'  => 'Add user',
+                        'route'  => 'admin',
+                        'action' => 'add-user',
+                    ],
+                    [
+                        'label'  => 'Products',
+                        'route'  => 'admin',
+                        'action' => 'products',
+                    ],
+                    [
+                        'label'  => 'Add product',
+                        'route'  => 'admin',
+                        'action' => 'add-product',
+                    ],
+                    [
+                        'label'  => 'Orders',
+                        'route'  => 'admin',
+                        'action' => 'orders',
+                    ],
+                    [
+                        'label'  => 'Dashboard',
+                        'route'  => 'admin',
+                    ],
+                ],
+            ],
+        ],
+    ],
 ];
