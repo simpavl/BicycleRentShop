@@ -116,6 +116,7 @@ return [
     'view_manager' => [
         'template_map' => [
             'layout/admin'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/shop'            => __DIR__ . '/../view/layout/shop.phtml',
         ],
         'template_path_stack' => [
             'shop' => __DIR__ . '/../view',
@@ -134,33 +135,13 @@ return [
 
         ],
     ],
-    // The 'access_filter' key is used by the User module to restrict or permit
-    // access to certain controller actions for unauthorized visitors.
-    /*'access_filter' => [
-        'controllers' => [
-            Controller\AdminController::class => [
-                // Give access to "resetPassword", "message" and "setPassword" actions
-                // to anyone.
-                ['actions' => [''], 'allow' => '*' ],
-                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
-                ['actions' => ['index', 'add-category', 'edit-category', 'delete-category','users-list', 'add-user', 'view-user', 'edit-user'], 'allow' => '@']
-            ],
-            Controller\IndexController::class => [
-                // Give access to "resetPassword", "message" and "setPassword" actions
-                // to anyone.
-                ['actions' => [''], 'allow' => '*' ],
-                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
-                ['actions' => ['index', 'add-category', 'edit-category', 'delete-category','users-list', 'add-user', 'view-user', 'edit-user'], 'allow' => '@']
-            ],
-        ]
-    ],*/
     'access_filter' => [
         'controllers' => [
             Controller\IndexController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
-                'user' => ['index'],
-                'admin' => [''],
+                'anyone' => ['index'],
+                'admin' => ['index']
             ],
             Controller\AdminController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions

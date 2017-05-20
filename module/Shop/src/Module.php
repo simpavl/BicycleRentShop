@@ -34,6 +34,9 @@ class Module
             if (get_class($controller) == 'Shop\Controller\AdminController')         {
                 $controller->layout('layout/admin');
             }
+            else {
+                $controller->layout('layout/shop');
+            }
         }, 100);
 
     }
