@@ -151,8 +151,11 @@ class AuthManager
             $userRole = $userentity->getRoles();
 
             $userRole = $userRole[0]->getRoleId();
-
-            if($acl->isAllowed($userRole,$actionName))
+            if($userRole = 'anyone')
+            {
+                return true;
+            }
+            else if($acl->isAllowed($userRole,$actionName))
             {
                 return true;
             }

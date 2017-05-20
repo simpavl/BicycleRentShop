@@ -22,28 +22,49 @@ $form->get('password')->setAttributes([
     ]);
 ?>
 
-<div class="row">
-    <div class="col-md-offset-4 col-md-3">
-        <form class="form-signin" method="post">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <?php if ($isLoginError): ?>
-                <div class="alert alert-warning" role="alert">
-                    Incorrect login and/or password.
-                    <a href="<?= $this->url('user') ?>">Forgot password?</a>
-                </div>
-            <?php endif; ?>
-            <?= $this->formLabel($form->get('email')); ?>
-            <?= $this->formElement($form->get('email')); ?>
-            <?= $this->formLabel($form->get('password')); ?>
-            <?= $this->formElement($form->get('password')); ?>
-            <div class="checkbox">
-                <label>
-                    <?= $this->formElement($form->get('remember_me')); ?> Remember me
-                </label>
+
+
+
+<div class="container">
+    <div class="account">
+        <h1>Account</h1>
+        <div class="account-pass">
+            <div class="col-md-8 account-top">
+                <form method="post">
+                    <?php if ($isLoginError): ?>
+                        <div class="alert alert-warning" role="alert">
+                            Incorrect login and/or password.
+                            <a href="<?= $this->url('user') ?>">Forgot password?</a>
+                        </div>
+                    <?php endif; ?>
+                    <div>
+                        <?= $this->formLabel($form->get('email')); ?>
+                        <?= $this->formElement($form->get('email')); ?>
+                    </div>
+                    <div>
+                        <?= $this->formLabel($form->get('password')); ?>
+                        <?= $this->formElement($form->get('password')); ?>
+                    </div>
+                    <a class="news-letter" style="display:block" href="#">
+                        <label class="checkbox">
+                            <?= $this->formElement($form->get('remember_me')); ?>
+                            <i></i>Remember me</label>
+                    </a>
+                    <?= $this->formElement($form->get('redirect_url')); ?>
+                    <?= $this->formElement($form->get('csrf')) ?>
+                    <?= $this->formElement($form->get('submit')); ?>
+                </form>
             </div>
-            <?= $this->formElement($form->get('redirect_url')); ?>
-            <?= $this->formElement($form->get('csrf')) ?>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+            <div class="col-md-4 left-account ">
+                <a href="single.html"><img class="img-responsive " src="/img/s1.jpg" alt=""></a>
+                <div class="five">
+                    <h2>25% </h2><span>discount</span>
+                </div>
+                <a href="register.html" class="create">Create an account</a>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
     </div>
+
 </div>
