@@ -56,21 +56,12 @@ class AdminController extends AbstractActionController
 
     private $productManager;
 
-    /**
-     * Authentication service.
-     * @var Zend\Authentication\AuthenticationService
-     */
-    private $authService;
-
-    private $user;
-    public function __construct($entityManager, $categoryManager, $userManager,$productManager, $authService)
+    public function __construct($entityManager, $categoryManager, $userManager,$productManager)
     {
         $this->entityManager = $entityManager;
         $this->categoryManager = $categoryManager;
         $this->userManager = $userManager;
         $this->productManager = $productManager;
-        $this->authService = $authService;
-        $this->user = $this->entityManager->getRepository(User::class)->findOneByEmail($this->authService->getIdentity());
     }
 
     public function indexAction()
@@ -89,7 +80,6 @@ class AdminController extends AbstractActionController
         } else{
             $userEmail = null;
         }
-        $this->layout()->user = $this->user;
         return new ViewModel([
             'categories' => $categories,
             'subcategories' => $subcategories,
@@ -105,7 +95,6 @@ class AdminController extends AbstractActionController
     public function categoriesAction()
     {
         $categories = $this->entityManager->getRepository(Category::class)->findBy([], ['id'=>'ASC']);
-        $this->layout()->user = $this->user;
         return new ViewModel([
             'categories' => $categories,
         ]);
@@ -113,7 +102,6 @@ class AdminController extends AbstractActionController
     public function subcategoriesAction()
     {
         $subcategories = $this->entityManager->getRepository(Subcategory::class)->findBy([], ['id'=>'ASC']);
-        $this->layout()->user = $this->user;
         return new ViewModel([
             'subcategories' => $subcategories,
         ]);
@@ -121,7 +109,6 @@ class AdminController extends AbstractActionController
     public function usersAction()
     {
         $users = $this->entityManager->getRepository(User::class)->findBy([], ['id' => 'ASC']);
-        $this->layout()->user = $this->user;
         return new ViewModel([
             'users' => $users,
         ]);
@@ -129,7 +116,6 @@ class AdminController extends AbstractActionController
     public function productsAction()
     {
         $products = $this->entityManager->getRepository(Product::class)->findBy([], ['id' => 'ASC']);
-        $this->layout()->user = $this->user;
         return new ViewModel([
             'products' => $products,
         ]);
@@ -137,7 +123,6 @@ class AdminController extends AbstractActionController
     public function ordersAction()
     {
         $orders = $this->entityManager->getRepository(Orders::class)->findBy([], ['id' => 'ASC']);
-        $this->layout()->user = $this->user;
         return new ViewModel([
             'orders' => $orders,
         ]);
@@ -145,7 +130,6 @@ class AdminController extends AbstractActionController
     public function addCategoryAction()
     {
         $form = new CategoryForm();
-        $this->layout()->user = $this->user;
         if($this->getRequest()->isPost()) {
 
             $data = $this->params()->fromPost();
@@ -165,7 +149,6 @@ class AdminController extends AbstractActionController
     public function editCategoryAction()
     {
         $form = new CategoryForm();
-        $this->layout()->user = $this->user;
         $catid = $this->params()->fromRoute('id', -1);
 
         $category = $this->entityManager->getRepository(Category::class)->findOneById($catid);
@@ -197,7 +180,6 @@ class AdminController extends AbstractActionController
     }
     public function deleteCategoryAction()
     {
-        $this->layout()->user = $this->user;
         $catid = $this->params()->fromRoute('id', -1);
         $category = $this->entityManager->getRepository(Category::class)->findOneById($catid);
         if($category == null) {
@@ -209,7 +191,6 @@ class AdminController extends AbstractActionController
     }
     public function addSubCategoryAction()
     {
-        $this->layout()->user = $this->user;
         $form = new SubCategoryForm($this->entityManager);
 
         if($this->getRequest()->isPost()) {
@@ -230,7 +211,6 @@ class AdminController extends AbstractActionController
     }
     public function editSubCategoryAction()
     {
-        $this->layout()->user = $this->user;
         $form = new SubCategoryForm($this->entityManager);
 
         $catid = $this->params()->fromRoute('id', -1);
@@ -265,7 +245,6 @@ class AdminController extends AbstractActionController
     }
     public function deleteSubCategoryAction()
     {
-        $this->layout()->user = $this->user;
         $catid = $this->params()->fromRoute('id', -1);
         $category = $this->entityManager->getRepository(Subcategory::class)->findOneById($catid);
         if($category == null) {
@@ -277,7 +256,6 @@ class AdminController extends AbstractActionController
     }
     public function usersListAction()
     {
-        $this->layout()->user = $this->user;
         $users = $this->entityManager->getRepository(User::class)->findBy([], ['id' => 'ASC']);
         return new ViewModel([
             'users' => $users
@@ -286,7 +264,6 @@ class AdminController extends AbstractActionController
 
     public function addUserAction()
     {
-        $this->layout()->user = $this->user;
         // Create user form
         $form = new UserForm('create', $this->entityManager);
 
@@ -319,7 +296,6 @@ class AdminController extends AbstractActionController
     }
     public function viewUserAction()
     {
-        $this->layout()->user = $this->user;
         $id = (int)$this->params()->fromRoute('id', -1);
         if ($id<1) {
             $this->getResponse()->setStatusCode(404);
@@ -341,7 +317,6 @@ class AdminController extends AbstractActionController
     }
     public function editUserAction()
     {
-        $this->layout()->user = $this->user;
         $id = (int)$this->params()->fromRoute('id', -1);
         if ($id<1) {
             $this->getResponse()->setStatusCode(404);
@@ -398,7 +373,6 @@ class AdminController extends AbstractActionController
 
     public function addProductAction()
     {
-        $this->layout()->user = $this->user;
         $tempFile = null;
         // Create user form
         $form = new ProductForm($this->entityManager);
@@ -443,7 +417,6 @@ class AdminController extends AbstractActionController
 
     public function editProductAction()
     {
-        $this->layout()->user = $this->user;
         $form = new ProductForm($this->entityManager);
 
         $prodid = $this->params()->fromRoute('id', -1);
@@ -481,7 +454,6 @@ class AdminController extends AbstractActionController
     }
     public function addProductImagesAction()
     {
-        $this->layout()->user = $this->user;
         $form = new ProductImageForm();
         $tempFile = null;
         $prodid = $this->params()->fromRoute('id', -1);
@@ -517,7 +489,6 @@ class AdminController extends AbstractActionController
     }
     public function productImagesAction()
     {
-        $this->layout()->user = $this->user;
         $form = new ProductForm($this->entityManager);
 
         $prodid = $this->params()->fromRoute('id', -1);
@@ -536,7 +507,6 @@ class AdminController extends AbstractActionController
     }
     public function editProdimgAction()
     {
-        $this->layout()->user = $this->user;
         $form = new ProductForm($this->entityManager);
         $tempFile = null;
         $prodid = $this->params()->fromRoute('id', -1);
