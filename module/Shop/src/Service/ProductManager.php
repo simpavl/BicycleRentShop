@@ -5,6 +5,8 @@ namespace Shop\Service;
 use Shop\Entity\Orders;
 use Shop\Entity\OrderProducts;
 use Shop\Entity\Product;
+use Shop\Entity\ProductImage;
+use Shop\Entity\ProductImageLinker;
 use Shop\Entity\Subcategory;
 use Shop\Entity\Category;
 use Zend\Filter\StaticFilter;
@@ -34,6 +36,8 @@ class ProductManager
         $category = $subcategory->getCategory();
         $product->setCategory($category);
         $product->setSubCategory($subcategory);
+        $tmp_name = basename($data['image-file']['tmp_name']);
+        $product->setLogo('/img/' . $tmp_name);
         $this->entityManager->persist($product);
         $this->entityManager->flush();
     }
@@ -53,6 +57,39 @@ class ProductManager
     public function removeProduct($product)
     {
         $this->entityManager->remove($product);
+        $this->entityManager->flush();
+    }
+
+    public function addNewProductImages($data,$prodid)
+    {
+        $product_image = new ProductImage();
+        $product_image_linker = new ProductImageLinker();
+        foreach($data['image-file'] as $image){
+            $product = $this->entityManager->getRepository(Product::class)->findOneById($prodid);
+            $tmp_name = basename($image['tmp_name']);
+            $product_image->setProduct($product);
+            $product_image->setLink('/img/' . $tmp_name);
+            $this->entityManager->persist($product_image);
+            $this->entityManager->flush();
+            $product_image_linker->setProductid($product);
+            $product_image_linker->setImageid($product_image);
+            $this->entityManager->persist($product_image_linker);
+            $this->entityManager->flush();
+            $this->entityManager->clear();
+        }
+    }
+
+    public function replaceProductImage($data,$prodimg)
+    {
+        $tmp_name = basename($data['image-file']['tmp_name']);
+        $prodimg->setLink('/img/' . $tmp_name);
+        $this->entityManager->flush();
+    }
+
+    public function removeProdimg($prodimg,$linker)
+    {
+        $this->entityManager->remove($linker);
+        $this->entityManager->remove($prodimg);
         $this->entityManager->flush();
     }
 
@@ -140,16 +177,16 @@ class ProductManager
     {
         $prodcount = [];
         $validprodlist = [];
-            //getting array of active orders and that fits product id objects
-            $ordprods = $this->entityManager->getRepository(OrderProducts::class)->findBy(['product' => $product->getId(), 'status' => 2],['id'=>'ASC']);
-            //getting number of products in use during select by user range
-            if(($quantity = $this->checkordprods($ordprods, $data))){
-                //checking if we can provide this product to the client or we'll be out of stock
-                if(($this->checkinstock($quantity, $product, $qty))){
-                    return true;
-                }
+        //getting array of active orders and that fits product id objects
+        $ordprods = $this->entityManager->getRepository(OrderProducts::class)->findBy(['product' => $product->getId(), 'status' => 2],['id'=>'ASC']);
+        //getting number of products in use during select by user range
+        if(($quantity = $this->checkordprods($ordprods, $data))){
+            //checking if we can provide this product to the client or we'll be out of stock
+            if(($this->checkinstock($quantity, $product, $qty))){
+                return true;
             }
-            else return true;
+        }
+        else return true;
         return false;
     }
 
@@ -167,8 +204,8 @@ class ProductManager
     {
         $totalprice = null;
         if($hours>5 && $hours<24){
-         $totalprice = $hours*$price;
-         $totalprice = $totalprice - ($totalprice * 0.2);
+            $totalprice = $hours*$price;
+            $totalprice = $totalprice - ($totalprice * 0.2);
         }
         elseif($hours>=24){
             $totalprice = $hours*$price;
