@@ -40,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserIdentity.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserIdentity.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/module/Shop/src/View/Helper/UserIdentity.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="32" column="5" lean-forward="false" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+            <state relative-caret-position="392">
+              <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding>
                 <element signature="e#35#56#0#PHP" expanded="true" />
               </folding>
@@ -52,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdminController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AdminController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/Shop/src/Controller/AdminController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-390">
-              <caret line="508" column="5" lean-forward="false" selection-start-line="508" selection-start-column="5" selection-end-line="508" selection-end-column="5" />
+            <state relative-caret-position="392">
+              <caret line="554" column="42" lean-forward="false" selection-start-line="554" selection-start-column="42" selection-end-line="554" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -88,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/module/Shop/config/module.config.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="384">
-              <caret line="124" column="6" lean-forward="true" selection-start-line="124" selection-start-column="6" selection-end-line="124" selection-end-column="6" />
+              <caret line="124" column="6" lean-forward="false" selection-start-line="124" selection-start-column="6" selection-end-line="124" selection-end-column="6" />
               <folding>
                 <element signature="e#297#326#0#PHP" expanded="true" />
               </folding>
@@ -642,10 +642,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17051000" />
+    <option name="totallyTimeSpent" value="17415000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="376" y="214" width="1217" height="933" extended-state="0" />
+    <frame x="376" y="214" width="1217" height="933" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24978392" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -987,7 +987,7 @@
     <entry file="file://$PROJECT_DIR$/module/Shop/config/module.config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
-          <caret line="124" column="6" lean-forward="true" selection-start-line="124" selection-start-column="6" selection-end-line="124" selection-end-column="6" />
+          <caret line="124" column="6" lean-forward="false" selection-start-line="124" selection-start-column="6" selection-end-line="124" selection-end-column="6" />
           <folding>
             <element signature="e#297#326#0#PHP" expanded="true" />
           </folding>
@@ -1000,16 +1000,6 @@
           <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
           <folding>
             <element signature="e#36#77#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module/Shop/src/View/Helper/UserIdentity.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="32" column="5" lean-forward="false" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-          <folding>
-            <element signature="e#35#56#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1038,9 +1028,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/module/Shop/src/Controller/AdminController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-390">
-          <caret line="508" column="5" lean-forward="false" selection-start-line="508" selection-start-column="5" selection-end-line="508" selection-end-column="5" />
+        <state relative-caret-position="392">
+          <caret line="554" column="42" lean-forward="false" selection-start-line="554" selection-start-column="42" selection-end-line="554" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Shop/src/View/Helper/UserIdentity.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+          <folding>
+            <element signature="e#35#56#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
