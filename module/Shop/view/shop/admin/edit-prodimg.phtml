@@ -1,0 +1,36 @@
+<?php
+
+$form = $this->form;
+$form->get('image-file')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Enter category name here'
+]);
+$form->get('image-file')->setAttributes(['multiple' => false]);
+$form->get('submit')->setValue('Save');
+$form->prepare();
+
+?>
+
+<h1>Edit Image</h1>
+
+<p>
+    Put image and click on the button.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class = "form-group">
+            <b>Previous image</b> <?= $this->prodimg->getLink() ?>
+        </div>
+        <?= $this->form()->openTag($form); ?>
+        <div class="form-group">
+            <?= $this->formLabel($form->get('image-file')); ?>
+            <?= $this->formElement($form->get('image-file')); ?>
+            <?= $this->formElementErrors($form->get('image-file')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>

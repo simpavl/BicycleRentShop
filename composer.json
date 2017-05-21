@@ -30,7 +30,8 @@
         "zendframework/zend-authentication": "^2.5",
         "zendframework/zend-mvc-plugins": "^1.0",
         "zendframework/zend-permissions-acl": "^2.6",
-        "jenzri-nizar/zf3-bootstrapdatepicker": "v1.0"
+        "jenzri-nizar/zf3-bootstrapdatepicker": "v1.0",
+        "zendframework/zend-mvc-plugin-fileprg": "^1.0"
 		
     },
     "autoload": {
