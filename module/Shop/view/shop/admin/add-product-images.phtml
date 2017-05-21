@@ -1,0 +1,30 @@
+<?php
+
+$form = $this->form;
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+$form->prepare();
+
+?>
+
+<h1>Add new product</h1>
+
+<p>
+    Enter new product details and click on the button.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?php if(empty($tempFile)) { ?>
+                <?= $this->formLabel($form->get('image-file')); ?>
+                <?= $this->formElement($form->get('image-file')); ?>
+                <?= $this->formElementErrors($form->get('image-file')); ?>
+            <?php } ?>
+        </div>
+        <?= $this->formElement($form->get('submit')); ?>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>
