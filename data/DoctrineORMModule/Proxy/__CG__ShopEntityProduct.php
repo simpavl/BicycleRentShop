@@ -64,10 +64,10 @@ class Product extends \Shop\Entity\Product implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'name', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'price', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'description', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'brand', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'subcategory', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'category', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'quantity'];
+            return ['__isInitialized__', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'name', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'price', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'description', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'brand', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'subcategory', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'category', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'quantity', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'logo', 'images'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'name', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'price', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'description', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'brand', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'subcategory', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'category', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'quantity'];
+        return ['__isInitialized__', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'id', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'name', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'price', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'description', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'brand', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'subcategory', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'category', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'quantity', '' . "\0" . 'Shop\\Entity\\Product' . "\0" . 'logo', 'images'];
     }
 
     /**
@@ -340,6 +340,50 @@ class Product extends \Shop\Entity\Product implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getQuantity', []);
 
         return parent::getQuantity();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setLogo($logo)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLogo', [$logo]);
+
+        return parent::setLogo($logo);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLogo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLogo', []);
+
+        return parent::getLogo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getImages()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImages', []);
+
+        return parent::getImages();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addProduct($image)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addProduct', [$image]);
+
+        return parent::addProduct($image);
     }
 
 }
