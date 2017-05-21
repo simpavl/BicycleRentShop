@@ -81,4 +81,3 @@ class ProductImageLinker
         return $this->imageid;
     }
 }
-

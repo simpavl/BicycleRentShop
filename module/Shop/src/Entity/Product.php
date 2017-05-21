@@ -3,6 +3,7 @@
 namespace Shop\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Product
@@ -61,8 +62,8 @@ class Product
      * })
      */
     private $subcategory;
-	
-	/**
+
+    /**
      * @var \Shop\Entity\Category
      *
      * @ORM\ManyToOne(targetEntity="Shop\Entity\Category")
@@ -72,18 +73,36 @@ class Product
      */
     private $category;
 
-	/**
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
     private $quantity;
 
+
     /**
-     * Get id
+     * @var string
      *
-     * @return integer
+     * @ORM\Column(name="logo", type="text", length=65535, precision=0, scale=0, nullable=false, unique=false)
      */
+    private $logo;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="Shop\Entity\ProductImage")
+     * @ORM\JoinTable(name="product_image_linker",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="image_id", referencedColumnName="id")}
+     * )
+     */
+    protected $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -208,7 +227,7 @@ class Product
     {
         return $this->subcategory;
     }
-	/**
+    /**
      * Set category
      *
      * @param \Shop\Entity\Subcategory $subcategory
@@ -231,8 +250,8 @@ class Product
     {
         return $this->category;
     }
-	
-	/**
+
+    /**
      * Set quantity
      *
      * @param integer $quantity
@@ -255,5 +274,50 @@ class Product
     {
         return $this->quantity;
     }
-}
 
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     *
+     * @return Product
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Get role.
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->images->getValues();
+    }
+
+    /**
+     * Add a role to the user.
+     *
+     * @param Image $image
+     *
+     * @return void
+     */
+    public function addProduct($image)
+    {
+        $this->images[] = $image;
+    }
+}
