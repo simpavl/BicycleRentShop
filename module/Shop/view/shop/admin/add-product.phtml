@@ -65,13 +65,7 @@ $form->prepare();
             <?= $this->formElement($form->get('price')); ?>
             <?= $this->formElementErrors($form->get('price')); ?>
         </div>
-        <div class="form-group">
-            <?php if(empty($tempFile)) { ?>
-            <?= $this->formLabel($form->get('image-file')); ?>
-            <?= $this->formElement($form->get('image-file')); ?>
-            <?= $this->formElementErrors($form->get('image-file')); ?>
-            <?php } ?>
-        </div>
+
         <?= $this->formElement($form->get('submit')); ?>
 
         <?= $this->form()->closeTag(); ?>
