@@ -3,12 +3,7 @@
 namespace Shop\Controller;
 
 use Shop\Entity\OrderProducts;
-use Shop\Entity\ProductImage;
-use Shop\Entity\ProductImageLinker;
 use Shop\Form\CategoryForm;
-use Shop\Form\ProductCategoryFirstForm;
-use Shop\Form\ProductCategorySecondForm;
-use Shop\Form\ProductImageForm;
 use Shop\Form\SubCategoryForm;
 use Shop\Form\UserForm;
 use Shop\Form\ProductForm;
@@ -395,52 +390,38 @@ class AdminController extends AbstractActionController
             'form' => $form
         ));
     }
-
     public function addProductAction()
     {
         $this->layout()->user = $this->user;
-        $tempFile = null;
         // Create user form
         $form = new ProductForm($this->entityManager);
-        $prg = $this->fileprg($form);
-        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
-            return $prg; // Return PRG redirect response
-        }
+
         // Check if user has submitted the form
-        if (is_array($prg)) {
+        if ($this->getRequest()->isPost()) {
+
+            // Fill in the form with POST data
+            $data = $this->params()->fromPost();
+
+            $form->setData($data);
+
             // Validate form
-            if ($form->isValid()) {
+            if($form->isValid()) {
 
                 // Get filtered and validated data
                 $data = $form->getData();
-                // Add user
+                // Add user.
+
                 $user = $this->productManager->addNewProduct($data);
-                //var_dump($data);
+
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('admin');
             }
-            // Form not valid, but file uploads might be valid...
-            // Get the temporary file information to show the user in the view
-            $fileErrors = $form->get('image-file')->getMessages();
-
-            if (empty($fileErrors)) {
-                $tempFile = $form->get('image-file')->getValue();
-            }
-            /*if(!empty($tempFile)){
-                foreach($form->get('image-file')->getValue() as $tempImage)
-                {
-                    var_dump($tempImage['tmp_name']);
-                }
-            }*/
-
         }
 
         return new ViewModel([
-            'form' => $form,
-            'tempFile' => $tempFile,
+            'form' => $form
         ]);
     }
-
     public function editProductAction()
     {
         $this->layout()->user = $this->user;
@@ -478,111 +459,6 @@ class AdminController extends AbstractActionController
             'form' => $form,
             'product' => $product
         ]);
-    }
-    public function addProductImagesAction()
-    {
-        $this->layout()->user = $this->user;
-        $form = new ProductImageForm();
-        $tempFile = null;
-        $prodid = $this->params()->fromRoute('id', -1);
-
-        $product = $this->entityManager->getRepository(Product::class)->findOneById($prodid);
-        if($product == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        $prg = $this->fileprg($form);
-        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
-            return $prg; // Return PRG redirect response
-        }
-        // Check if user has submitted the form
-        if (is_array($prg)) {
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                $user = $this->productManager->addNewProductImages($data,$prodid);
-                return $this->redirect()->toRoute('admin');
-            }
-            $fileErrors = $form->get('image-file')->getMessages();
-
-            if (empty($fileErrors)) {
-                $tempFile = $form->get('image-file')->getValue();
-            }
-        }
-        return new ViewModel([
-            'form' => $form,
-            'product' => $product,
-            'tempfile' => $tempFile,
-        ]);
-    }
-    public function productImagesAction()
-    {
-        $this->layout()->user = $this->user;
-        $form = new ProductForm($this->entityManager);
-
-        $prodid = $this->params()->fromRoute('id', -1);
-        $images = null;
-        $product = $this->entityManager->getRepository(Product::class)->findOneById($prodid);
-        if($product == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        $images = $product->getImages();
-        return new ViewModel([
-            'form' => $form,
-            'images' => $images,
-            'prodid' => $prodid,
-        ]);
-    }
-    public function editProdimgAction()
-    {
-        $this->layout()->user = $this->user;
-        $form = new ProductForm($this->entityManager);
-        $tempFile = null;
-        $prodid = $this->params()->fromRoute('id', -1);
-
-        $prodimg = $this->entityManager->getRepository(ProductImage::class)->findOneById($prodid);
-        if($prodimg == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        $prg = $this->fileprg($form);
-        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
-            return $prg; // Return PRG redirect response
-        }
-        // Check if user has submitted the form
-        if (is_array($prg)) {
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                $user = $this->productManager->replaceProductImage($data,$prodimg);
-                return $this->redirect()->toRoute('products');
-            }
-            $fileErrors = $form->get('image-file')->getMessages();
-
-            if (empty($fileErrors)) {
-                $tempFile = $form->get('image-file')->getValue();
-            }
-        }
-        return new ViewModel([
-            'form' => $form,
-            'prodimg' => $prodimg,
-            'tempfile' => $tempFile,
-        ]);
-    }
-    public function removeProdimg()
-    {
-
-        $imgid = $this->params()->fromRoute('id', -1);
-        $prodimg = $this->entityManager->getRepository(ProductImage::class)->findOneById($imgid);
-        if($prodimg == null) {
-            $this->getResponse()->setStatusCode(404);
-            return;
-        }
-        $prodid = $prodimg->getProduct()->getId();
-        $linker = $this->entityManager->getRepository(ProductImageLinker::class)->findOneBy(['productid' => $prodid,'imageid' => $imgid] );
-        $this->productManager->removeProdimg($prodimg,$linker);
-        return $this->redirect()->toRoute('admin');
     }
     public function deleteProductAction()
     {

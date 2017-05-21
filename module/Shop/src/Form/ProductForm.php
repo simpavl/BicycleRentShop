@@ -97,16 +97,6 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
             ],
         ]);
         $this->add([
-            'type' => 'File',
-            'name' => 'image-file',
-            'attributes' => [
-                'id' => 'image-file',
-            ],
-            'options' => [
-                'label' => 'Upload product logo',
-            ],
-        ]);
-        $this->add([
             'type' => 'submit',
             'name' => 'submit',
             'attributes' => [
@@ -156,18 +146,5 @@ class ProductForm extends Form implements ObjectManagerAwareInterface
                 ],
             ],
         ]);
-        $inputfilter->add([
-            'name' => 'image-file',
-            'required' => true,
-            'filters' => [
-                ['name' => 'filerenameupload',
-                    'options' => [
-                        'target' => 'public/img/image.jpg',
-                        'randomize' => true,
-                    ]
-                ],
-            ],
-        ]);
-
     }
 }

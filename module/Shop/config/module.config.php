@@ -38,7 +38,6 @@ return [
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
-                        'subid'  => '[0-9+',
                     ],
                     'defaults' => [
                         'controller' => Controller\AdminController::class,
@@ -150,8 +149,7 @@ return [
                 'user' => ['index'],
                 'admin' => ['index', 'editSubCategory', 'addCategory', 'editCategory',
                     'deleteCategory','usersList', 'addUser', 'viewUser', 'editUser','editSubCategory',
-                    'addSubCategory','addProduct','editProduct','categories','subcategories','users','products',
-                    'orders','productImages','addProductImages','editProdimg', 'removeProdimg'],
+                    'addSubCategory','addProduct','editProduct','categories','subcategories','users','products','orders'],
             ],
             Controller\ProductController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
