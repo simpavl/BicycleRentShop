@@ -123,6 +123,14 @@ return [
             'shop' => __DIR__ . '/../view',
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\UserIdentity::class => View\Factory\UserIdentityFactory::class,
+        ],
+        'aliases' => [
+            'userIdentity' => View\Helper\UserIdentity::class
+        ],
+    ],
     'service_manager' => [
         'factories' => [
             \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
