@@ -316,7 +316,7 @@ class Product
      *
      * @return void
      */
-    public function addProduct($image)
+    public function addImage($image)
     {
         $this->images[] = $image;
     }
