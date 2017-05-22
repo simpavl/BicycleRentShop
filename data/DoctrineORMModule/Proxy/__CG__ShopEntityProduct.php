@@ -378,12 +378,12 @@ class Product extends \Shop\Entity\Product implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function addProduct($image)
+    public function addImage($image)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addProduct', [$image]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addImage', [$image]);
 
-        return parent::addProduct($image);
+        return parent::addImage($image);
     }
 
 }

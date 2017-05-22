@@ -48,6 +48,11 @@ class ShoppingCartEntity implements ShoppingCartEntityInterface
     protected $end;
 
     /**
+     * @var string
+     */
+    protected $logo;
+
+    /**
      * @var array
      */
     protected $product_properties = array();
@@ -98,6 +103,14 @@ class ShoppingCartEntity implements ShoppingCartEntityInterface
     public function getEnd()
     {
         return $this->end;
+    }
+
+    /**
+     * @return the $logo
+     */
+    public function getLogo()
+    {
+        return $this->logo;
     }
 
     /**
@@ -162,5 +175,13 @@ class ShoppingCartEntity implements ShoppingCartEntityInterface
     public function getProductProperties()
     {
         return $this->product_properties;
+    }
+
+    /**
+     * @param string $logo
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
     }
 }

@@ -25,6 +25,7 @@
                         <th>Subcategory</th>
                         <th>Category</th>
                         <th>Quantity</th>
+                        <th>Logo</th>
                         <th>Actions</th>
                     </tr>
 
@@ -37,6 +38,7 @@
                             <td><?= $this->escapeHtml($product->getSubcategory()->getName()); ?></td>
                             <td><?= $this->escapeHtml($product->getCategory()->getName()); ?></td>
                             <td><?= $this->escapeHtml($product->getQuantity()); ?></td>
+                            <td><?= $this->escapeHtml($product->getLogo()); ?></td>
                             <td>
                                 <a class="btn btn-info" href="<?= $this->url('admin',
                                     ['action'=>'edit-product', 'id'=>$product->getId()]); ?>">

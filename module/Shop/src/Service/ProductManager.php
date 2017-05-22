@@ -37,7 +37,7 @@ class ProductManager
         $product->setCategory($category);
         $product->setSubCategory($subcategory);
         $tmp_name = basename($data['image-file']['tmp_name']);
-        $product->setLogo('/img/' . $tmp_name);
+        $product->setLogo('img/' . $tmp_name);
         $this->entityManager->persist($product);
         $this->entityManager->flush();
     }
@@ -47,11 +47,12 @@ class ProductManager
         $product->setPrice($data['price']);
         $product->setDescription($data['description']);
         $product->setQuantity($data['quantity']);
+        $tmp_name = basename($data['image-file']['tmp_name']);
+        $product->setLogo('img/' . $tmp_name);
         $subcategory = $this->entityManager->getRepository(Subcategory::class)->findOneById($data['category']);
         $category = $subcategory->getCategory();
         $product->setCategory($category);
         $product->setSubCategory($subcategory);
-
         $this->entityManager->flush();
     }
     public function removeProduct($product)
@@ -68,7 +69,7 @@ class ProductManager
             $product = $this->entityManager->getRepository(Product::class)->findOneById($prodid);
             $tmp_name = basename($image['tmp_name']);
             $product_image->setProduct($product);
-            $product_image->setLink('/img/' . $tmp_name);
+            $product_image->setLink('img/' . $tmp_name);
             $this->entityManager->persist($product_image);
             $this->entityManager->flush();
             $product_image_linker->setProductid($product);
@@ -82,7 +83,7 @@ class ProductManager
     public function replaceProductImage($data,$prodimg)
     {
         $tmp_name = basename($data['image-file']['tmp_name']);
-        $prodimg->setLink('/img/' . $tmp_name);
+        $prodimg->setLink('img/' . $tmp_name);
         $this->entityManager->flush();
     }
 

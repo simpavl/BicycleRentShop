@@ -28,5 +28,9 @@ interface ShoppingCartEntityInterface
 
     public function setProductProperties(array $properties);
 
+    public function setStart($start);
+
+    public function setEnd($end);
+
     public function getProductProperties();
 }

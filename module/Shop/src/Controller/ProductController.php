@@ -120,6 +120,7 @@ class ProductController extends AbstractActionController
                         'product' => $product->getName(),
                         'start' => $data['start'],
                         'end' => $data['end'],
+                        'logo' => $product->getLogo(),
                     ];
                     $this->ShoppingCart()->insert($cartprod);
                 //$form->setData([$data['start'], $data['end']]);

@@ -139,7 +139,7 @@ class AdminController extends AbstractActionController
                 $data = $form->getData();
                 $this->categoryManager->addNewCategory($data);
 
-                return $this->redirect()->toRoute('shop');
+                return $this->redirect()->toRoute('admin',['action'=>'categories']);
             }
         }
         return new ViewModel([
@@ -418,7 +418,7 @@ class AdminController extends AbstractActionController
     public function editProductAction()
     {
         $form = new ProductForm($this->entityManager);
-
+        $tempFile = null;
         $prodid = $this->params()->fromRoute('id', -1);
 
         $product = $this->entityManager->getRepository(Product::class)->findOneById($prodid);
@@ -426,16 +426,25 @@ class AdminController extends AbstractActionController
             $this->getResponse()->setStatusCode(404);
             return;
         }
-        if($this->getRequest()->isPost()) {
-
-            $data = $this->params()->fromPost();
-
-            $form->setData($data);
+        $prg = $this->fileprg($form);
+        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
+            return $prg; // Return PRG redirect response
+        }
+        // Check if user has submitted the form
+        if (is_array($prg)) {
+            // Validate form
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->productManager->updateProduct($product,$data);
 
-                return $this->redirect()->toRoute('admin');
+                return $this->redirect()->toRoute('admin/products');
+            }
+            // Form not valid, but file uploads might be valid...
+            // Get the temporary file information to show the user in the view
+            $fileErrors = $form->get('image-file')->getMessages();
+
+            if (empty($fileErrors)) {
+                $tempFile = $form->get('image-file')->getValue();
             }
         } else {
             $data = [
@@ -449,7 +458,8 @@ class AdminController extends AbstractActionController
         }
         return new ViewModel([
             'form' => $form,
-            'product' => $product
+            'product' => $product,
+            'tempFile' => $tempFile,
         ]);
     }
     public function addProductImagesAction()
@@ -540,9 +550,8 @@ class AdminController extends AbstractActionController
             'tempfile' => $tempFile,
         ]);
     }
-    public function removeProdimg()
+    public function removeProdimgAction()
     {
-
         $imgid = $this->params()->fromRoute('id', -1);
         $prodimg = $this->entityManager->getRepository(ProductImage::class)->findOneById($imgid);
         if($prodimg == null) {

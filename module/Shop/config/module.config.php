@@ -126,9 +126,11 @@ return [
     'view_helpers' => [
         'factories' => [
             View\Helper\UserIdentity::class => View\Factory\UserIdentityFactory::class,
+            View\Helper\CategoriesHelper::class => View\Factory\CategoriesHelperFactory::class,
         ],
         'aliases' => [
-            'userIdentity' => View\Helper\UserIdentity::class
+            'userIdentity' => View\Helper\UserIdentity::class,
+            'categoriesHelper' => View\Helper\CategoriesHelper::class,
         ],
     ],
     'service_manager' => [

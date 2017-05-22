@@ -296,7 +296,7 @@ class Product
      */
     public function getLogo()
     {
-        return $this->description;
+        return $this->logo;
     }
 
     /**
