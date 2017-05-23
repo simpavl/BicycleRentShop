@@ -49,10 +49,10 @@ class IndexController extends AbstractActionController
         $paginator = new Paginator($adapter);
         $paginator->setDefaultItemCountPerPage(9);
         $paginator->setCurrentPageNumber($page);
-        //$categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
         return new ViewModel([
-            'categories' => $paginator,
-            'test' => $paginator,
+            'products' => $paginator,
+            'categories' => $categories,
             'catid' => $catid
         ]);
     }

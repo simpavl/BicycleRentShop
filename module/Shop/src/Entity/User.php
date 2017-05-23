@@ -60,7 +60,7 @@ class User
     /**
      * @var boolean
      *
-     * @ORM\Column(name="gender", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="gender", type="boolean", precision=0, scale=0, nullable=true, unique=false)
      */
     private $gender;
 
@@ -324,9 +324,9 @@ class User
     }
 
     /**
-     * Get role
+     * Set role
      *
-     * @param string $email
+     * @param string $role
      *
      * @return User
      */
@@ -338,7 +338,7 @@ class User
     }
 
     /**
-     * Set role
+     * Get role
      *
      * @return string
      */

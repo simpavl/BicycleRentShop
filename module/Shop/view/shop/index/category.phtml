@@ -11,42 +11,15 @@
                     <h3 class="cate">Categories</h3>
                 </div>
                 <ul class="menu">
-                    <li class="item1"><a href="#">Men </a>
+                    <?php $itemcount = null; foreach($categories as $category): $itemcount++; ?>
+                    <li class="item<?= $itemcount ?>"><a href="<?= $this->url('shop/category',['id' => $itemcount]); ?>"><?= ucfirst($category->getName()) ?></a>
                         <ul class="cute">
-                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
-                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
-                            <li class="subitem3"><a href="single.html">Automatic Fails </a></li>
+                            <?php $subcount = null; foreach(($this->categoriesHelper()->findSubcategories($category)) as $subcategory): $subcount++;?>
+                            <li class="subitem<?= $subcount ?>"><a href="single.html"><?= ucfirst($subcategory->getName()) ?> </a></li>
+                            <?php endforeach; ?>
                         </ul>
                     </li>
-                    <li class="item2"><a href="#">Women </a>
-                        <ul class="cute">
-                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
-                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
-                            <li class="subitem3"><a href="single.html">Automatic Fails </a></li>
-                        </ul>
-                    </li>
-                    <li class="item3"><a href="#">Kids</a>
-                        <ul class="cute">
-                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
-                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
-                            <li class="subitem3"><a href="single.html">Automatic Fails</a></li>
-                        </ul>
-                    </li>
-                    <li class="item4"><a href="#">Accesories</a>
-                        <ul class="cute">
-                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
-                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
-                            <li class="subitem3"><a href="single.html">Automatic Fails</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="item4"><a href="#">Shoes</a>
-                        <ul class="cute">
-                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
-                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
-                            <li class="subitem3"><a href="product.html">Automatic Fails </a></li>
-                        </ul>
-                    </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
             <!--initiate accordion-->
@@ -148,7 +121,7 @@
             </div>
         </div>
         <div class="col-md-9 product1">
-            <?php $count = null; foreach($categories as $category): $count++;?>
+            <?php $count = null; foreach($products as $product): $count++;?>
                <?php if($count==1 || $count==4 || $count==7): ?>
             <div class="bottom-product">
                <?php endif;?>
@@ -171,7 +144,7 @@
         </div>
         <div class="clearfix"> </div>
         <nav class="in">
-            <?= $this->paginationControl($test,
+            <?= $this->paginationControl($products,
                 'Sliding',
                 'shop/pagination/paginator',
                 ['route' => 'shop/category', 'catid' => $catid]); ?>

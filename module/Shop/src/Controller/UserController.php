@@ -3,6 +3,7 @@
 namespace Shop\Controller;
 
 use Shop\Entity\User;
+use Shop\Form\RegisterForm;
 use Shop\Form\UserManageForm;
 use Shop\Service\Factory\UserManagerFactory;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -134,6 +135,37 @@ class UserController extends AbstractActionController
         return $this->redirect()->toRoute('user');
     }
 
+    public function registrationAction()
+    {
+        // Create user form
+        $form = new RegisterForm();
+
+        // Check if user has submitted the form
+        if ($this->getRequest()->isPost()) {
+
+            // Fill in the form with POST data
+            $data = $this->params()->fromPost();
+
+            $form->setData($data);
+
+            // Validate form
+            if($form->isValid()) {
+
+                // Get filtered and validated data
+                $data = $form->getData();
+
+                // Add user.
+                $user = $this->userManager->registerUser($data);
+
+                // Redirect to "view" page
+                return $this->redirect()->toRoute('shop');
+            }
+        }
+
+        return new ViewModel([
+            'form' => $form
+        ]);
+    }
     public function cabinetAction()
     {
         if ($this->authService->hasIdentity()) {

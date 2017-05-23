@@ -1,6 +1,8 @@
 <?php
 namespace Shop\Service;
 use Shop\Entity\User;
+use Shop\Entity\UserRole;
+use Shop\Entity\UserRoleLinker;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
 /**
@@ -49,6 +51,39 @@ class UserManager
         // Add the entity to the entity manager.
         $this->entityManager->persist($user);
 
+        // Apply changes to database.
+        $this->entityManager->flush();
+
+        return $user;
+    }
+
+    public function registerUser($data)
+    {
+        // Do not allow several users with the same email address.
+        if($this->checkUserExists($data['email'])) {
+            throw new \Exception("User with email address " . $data['$email'] . " already exists");
+        }
+        $linker = new UserRoleLinker();
+        $userrole = $this->entityManager->getRepository(UserRole::class)->findOneByRoleId('user');
+        // Create new User entity.
+        $user = new User();
+        $user->setEmail($data['email']);
+        $user->setFirstname($data['first_name']);
+        $user->setSurname($data['last_name']);
+        // Encrypt password and store the password in encrypted state.
+        $bcrypt = new Bcrypt();
+        $passwordHash = $bcrypt->create($data['password']);
+        $user->setPassword($passwordHash);
+
+        $user->setUseractive($data['status']);
+        $user->setRole('user');
+        /*$currentDate = date('Y-m-d H:i:s');
+        $user->setDateCreated($currentDate);*/
+        // Add the entity to the entity manager.
+        $this->entityManager->persist($user);
+        $linker->setUserid($user->getId());
+        $linker->setRoleid($userrole->getRoleid());
+        $this->entityManager->persist($linker);
         // Apply changes to database.
         $this->entityManager->flush();
 

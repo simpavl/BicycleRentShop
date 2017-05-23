@@ -166,12 +166,6 @@ return [
     ],
     'access_filter' => [
         'controllers' => [
-            Controller\IndexController::class => [
-                // Give access to "resetPassword", "message" and "setPassword" actions
-                // to anyone.
-                'anyone' => ['index'],
-                'admin' => ['index']
-            ],
             Controller\AdminController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions
                 // to anyone.
