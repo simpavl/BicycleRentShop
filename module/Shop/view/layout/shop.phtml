@@ -78,7 +78,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <?php $count = null; ?>
                                         <?php foreach(($this->categoriesHelper()->getCategories()) as $category): ?>
                                             <?php $count++; if($count>11) {?>
-                                            <li><a href="<?= $this->url('shop',['action' => 'category','id' => $count]); ?>"><?= $this->escapeHtml($category) ?></a></li>
+                                            <li><a href="<?= $this->url('shop/category',['id' => $count]); ?>"><?= $this->escapeHtml($category) ?></a></li>
 
 									</ul>	
 								</div>							
@@ -87,7 +87,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="h_nav">
 									<ul>
                                         <?php }else { ?>
-                                        <li><a href="<?= $this->url('shop',['action' => 'category','id' => $count]); ?>"><?= $this->escapeHtml($category) ?></a></li>
+                                        <li><a href="<?= $this->url('shop/category',['id' => $count]); ?>"><?= $this->escapeHtml($category) ?></a></li>
                                         <?php } endforeach; ?>
 									</ul>	
 								</div>							

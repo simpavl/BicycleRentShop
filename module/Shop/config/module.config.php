@@ -20,7 +20,7 @@ return [
             'shop' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route' => '/shop[/:action[/:id]]',
+                    'route' => '/shop',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -28,6 +28,24 @@ return [
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action'     => 'index',
+                    ],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'category' => [
+                        'type'    => Segment::class,
+                        'options' => [
+                            'route' => '/category/[:id][/:page/:pageid]',
+                            'constraints' => [
+                                'id'     => '[0-9]+',
+                                'page'   => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'pageid' => '[0-9]+',
+                            ],
+                            'defaults' => [
+                                'controller' => Controller\IndexController::class,
+                                'action'     => 'category',
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -38,7 +56,6 @@ return [
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
-                        'subid'  => '[0-9+',
                     ],
                     'defaults' => [
                         'controller' => Controller\AdminController::class,
@@ -141,6 +158,7 @@ return [
             Service\ProductManager::class => Service\Factory\ProductManagerFactory::class,
             Service\OrderManager::class => Service\Factory\OrderManagerFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
+            Service\IndexManager::class => Service\Factory\IndexManagerFactory::class,
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
             'navigation' => Zend\Navigation\Service\DefaultNavigationFactory::class,
 
