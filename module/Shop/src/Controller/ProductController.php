@@ -2,6 +2,7 @@
 
 namespace Shop\Controller;
 
+use Shop\Entity\Category;
 use Shop\Form\SortForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -68,18 +69,6 @@ class ProductController extends AbstractActionController
             'end' => '09.05.2017 16:00',
 
         );
-        /*$hour = date('H');
-        $minute = date('i');
-        if(date('i') > 30) {
-            $minute = '00';
-            $date = new \DateTime($hour . ':' . $minute);
-            $date->add(new \DateInterval('PT1H'));
-        } else {
-            $minute = '30';
-            $date = new \DateTime($hour . ':' . $minute);
-        }
-
-        var_dump($date->format('H:i'));*/
         $this->ShoppingCart()->insert($product);
         var_dump($this->ShoppingCart()->cart());
         foreach($this->ShoppingCart()->cart() as $token => $cart){
@@ -96,6 +85,8 @@ class ProductController extends AbstractActionController
         $prodid = $this->params()->fromRoute('id', -1);
         $form = new SortForm('create',$this->entityManager);
         $product = $this->entityManager->getRepository(Product::class)->findOneById($prodid);
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
+        $images = $product->getImages();
         if($product == null) {
             $this->getResponse()->setStatusCode(404);
             return;
@@ -105,10 +96,9 @@ class ProductController extends AbstractActionController
             $data = $this->params()->fromPost();
 
             $form->setData($data);
+
             if ($form->isValid()) {
                 $data = $form->getData();
-                //$this->categoryManager->addNewCategory($data);
-                //$prodlist = $this->productManager->sortProducts($data);
 
                 if( $this->productManager->checkavialablesingle($product,$data, $data['quantity'])){
                     $price = ($this->productManager->getfinalprice($this->productManager->getrentinterval($data['start'], $data['end']),
@@ -123,13 +113,14 @@ class ProductController extends AbstractActionController
                         'logo' => $product->getLogo(),
                     ];
                     $this->ShoppingCart()->insert($cartprod);
-                //$form->setData([$data['start'], $data['end']]);
                 return $this->redirect()->toRoute('cart');}
             }
         }
         return new ViewModel([
             'form' => $form,
             'product' => $product,
+            'categories' => $categories,
+            'images' => $images
         ]);
     }
 }

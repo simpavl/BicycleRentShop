@@ -7,6 +7,7 @@
 
 namespace Shop;
 use Shop\Controller\IndexController;
+use Shop\Controller\ProductController;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Controller\AbstractActionController;
 use Shop\Controller\UserController;
@@ -71,7 +72,7 @@ class Module
 
         // Получаем экземпляр сервиса AuthManager.
         $authManager = $event->getApplication()->getServiceManager()->get(AuthManager::class);
-        if ($controllerName!=UserController::class && $controllerName!=IndexController::class &&
+        if ($controllerName!=UserController::class && $controllerName!=IndexController::class && $controllerName!=ProductController::class &&
             !$authManager->filterAccess($controllerName, $actionName)) {
 
             // Запоминаем URL страницы, к которой пытался обратиться пользователь. Мы перенаправим пользователя

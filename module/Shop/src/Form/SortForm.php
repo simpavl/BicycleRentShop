@@ -55,7 +55,7 @@ class SortForm extends Form implements ObjectManagerAwareInterface
                 $date = new \DateTime($hour . ':' . $minute);
             }
             $date = $date->format('H:i');
-        if($this->scenario == 'filter') {
+        /*if($this->scenario == 'filter') {
             $this->add([
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'category',
@@ -73,7 +73,7 @@ class SortForm extends Form implements ObjectManagerAwareInterface
                     'required' => 'required',
                 ],
             ]);
-        }
+        }*/
         if($this->scenario == 'create')
         {
             $this->add([
@@ -83,6 +83,7 @@ class SortForm extends Form implements ObjectManagerAwareInterface
                     'label' => 'Quantity',
                 ],
                 'attributes' => [
+                    'id' => 'quantity',
                     'min' => '0',
                     'max' => '10',
                     'step' => '1', // default step interval is 1

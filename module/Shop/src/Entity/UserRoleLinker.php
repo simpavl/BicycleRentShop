@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Category
  *
- * @ORM\Table(name="user_id", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Table(name="user_role_linker", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
  * @ORM\Entity
  */
 class UserRoleLinker

@@ -1,0 +1,39 @@
+<h1>Manage Products</h1>
+
+
+
+<table class="table table-striped">
+
+    <tr>
+        <th>ID</th>
+        <th>Product(id)</th>
+        <th>Product(name)</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Actions</th>
+    </tr>
+
+    <?php foreach ($products as $product): ?>
+        <tr>
+            <td><?= $this->escapeHtml($product->getId()); ?></td>
+            <td><?= $this->escapeHtml($product->getProduct()->getId()); ?></td>
+            <td><?= $this->escapeHtml($product->getProduct()->getName()); ?></td>
+            <td><?= $this->escapeHtml($product->getQuantity()); ?></td>
+            <td><?= $this->escapeHtml($product->getStatus()->getName()); ?></td>
+            <td><?= $this->escapeHtml($product->getStartdate()->format('d-m-Y H:i')); ?></td>
+            <td><?= $this->escapeHtml($product->getEnddate()->format('d-m-Y H:i')); ?></td>
+            <td>
+                <a class="btn btn-info" href="<?= $this->url('admin',
+                    ['action'=>'edit-order-prod', 'id'=>$product->getId()]); ?>">
+                    <span class="glyphicon glyphicon-pencil" ></span> Edit
+                </a>
+                <a class="btn btn-danger" href="<?= $this->url('admin',
+                    ['action'=>'delete-order-prod', 'id'=>$product->getId()]); ?>">
+                    <span class="glyphicon glyphicon-remove"></span> Delete
+                </a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

@@ -1,226 +1,154 @@
 <h3 style="font-style: italic;">
     You are logged in as <?= $this->escapeHtml($this->identity()) ?>
 </h3>
-<a class="btn btn-danger" href="<?= $this->url('user',
-    ['action'=>'logout'],['query'=>['redirectUrl'=>'user']]); ?>">
-    <span class="glyphicon glyphicon-remove" ></span> Logout
-</a>
 
 
-<h1>Manage Categories</h1>
+<!-- /.col -->
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+        <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Total orders</span>
+            <span class="info-box-number"><?= count($orders) ?></span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+</div>
+
+<!-- /.col -->
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="info-box">
+        <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+
+        <div class="info-box-content">
+            <span class="info-box-text">Total products</span>
+            <span class="info-box-number"><?= count($products) ?></span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+</div>
+<!-- /.col -->
+
+<!-- ./col -->
+<div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-yellow">
+        <div class="inner">
+            <h3><?= count($users)?></h3>
+
+            <p>User Registrations</p>
+        </div>
+        <div class="icon">
+            <i class="ion ion-person-add"></i>
+        </div>
+    </div>
+</div>
+<!-- ./col -->
+
+<!-- BAR CHART -->
+<div class="col-md-12">
+<div class="box box-success">
+    <div class="box-header with-border">
+        <h3 class="box-title">Occupation</h3>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="chart">
+            <canvas id="barChart" style="height:230px"></canvas>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>
+</div>
 
 
-<p>
-    <a class="btn btn-default" href="
-        <?= $this->url('admin', ['action'=>'add-category'])?>">
-        New Category
-    </a>
-</p>
+<!-- /.box -->
+<!-- jQuery 3.1.1 -->
+<script src="/plugins/jQuery/jquery-3.1.1.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/js/bootstrap.min.js"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="/plugins/chartjs/Chart.min.js"></script>
+<!-- FastClick -->
+<script src="/plugins/fastclick/fastclick.js"></script>
 
-<table class="table table-striped">
+<script>
+    $(function () {
+        /* ChartJS
+         * -------
+         * Here we will create a few charts using ChartJS
+         */
+        var areaChartData = {
+            labels: ["June", "July", "August", "September", "October", "November", "December"],
+            datasets: [
+                {
+                    label: "All products",
+                    fillColor: "rgba(210, 214, 222, 1)",
+                    strokeColor: "rgba(210, 214, 222, 1)",
+                    pointColor: "rgba(210, 214, 222, 1)",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: "Occupied Products",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "rgba(60,141,188,1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(60,141,188,1)",
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+        //-------------
+        //- BAR CHART -
+        //-------------
+        var barChartCanvas = $("#barChart").get(0).getContext("2d");
+        var barChart = new Chart(barChartCanvas);
+        var barChartData = areaChartData;
+        barChartData.datasets[1].fillColor = "#00a65a";
+        barChartData.datasets[1].strokeColor = "#00a65a";
+        barChartData.datasets[1].pointColor = "#00a65a";
+        var barChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke: true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        };
 
-    <tr>
-        <th>ID</th>
-        <th>Category Name</th>
-        <th>Actions</th>
-    </tr>
-
-    <?php foreach ($categories as $category): ?>
-        <tr>
-            <td><?= $this->escapeHtml($category->getId()); ?></td>
-            <td><?= $this->escapeHtml($category->getName()); ?></td>
-            <td>
-                <a class="btn btn-info" href="<?= $this->url('admin',
-                    ['action'=>'edit-category', 'id'=>$category->getId()]); ?>">
-                    <span class="glyphicon glyphicon-pencil" ></span> Edit
-                </a>
-                <a class="btn btn-danger" href="<?= $this->url('admin',
-                    ['action'=>'delete-category', 'id'=>$category->getId()]); ?>">
-                    <span class="glyphicon glyphicon-remove"></span> Delete
-                </a>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-</table>
-
-
-<h1>Manage Subcategories</h1>
-
-
-<p>
-    <a class="btn btn-default" href="
-    <?= $this->url('admin', ['action'=>'add-sub-category']); ?>">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New User
-    </a>
-</p>
-
-<table class="table table-striped">
-
-    <tr>
-        <th>ID</th>
-        <th>Category</th>
-        <th>Name</th>
-        <th>Actions</th>
-    </tr>
-
-    <?php foreach ($subcategories as $subcategory): ?>
-
-        <tr>
-            <td><?= $this->escapeHtml($subcategory->getId()); ?></td>
-            <td><?= $this->escapeHtml($subcategory->getCategory()->getName()); ?>
-            </td>
-            <td><?= $this->escapeHtml($subcategory->getName()); ?></td>
-            <td>
-                <a class="btn btn-info" href="<?= $this->url('admin',
-                    ['action'=>'edit-sub-category', 'id'=>$subcategory->getId()]); ?>">
-                    <span class="glyphicon glyphicon-pencil" ></span> Edit
-                </a>
-                <a class="btn btn-default" href="<?= $this->url('admin',
-                    ['action'=>'delete-sub-category', 'id'=>$subcategory->getId()]); ?>">
-                    <span class="glyphicon glyphicon-asterisk"></span> Delete subcategory
-                </a>
-            </td>
-        </tr>
-
-    <?php endforeach; ?>
-
-</table>
-
-
-<h1>Manage Users</h1>
-
-
-<p>
-    <a class="btn btn-default" href="
-    <?= $this->url('admin', ['action'=>'add-user']); ?>">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New User
-    </a>
-</p>
-
-<table class="table table-striped">
-
-    <tr>
-        <th>ID</th>
-        <th>E-mail</th>
-        <th>Full Name</th>
-        <th>Status</th>
-        <th>Gender</th>
-        <th>Actions</th>
-    </tr>
-
-    <?php foreach ($users as $user): ?>
-
-        <tr>
-            <td><?= $this->escapeHtml($user->getId()); ?></td>
-            <td>
-                <a href="<?= $this->url('admin', ['action'=>'view-user', 'id'=>$user->getId()]); ?>">
-                    <?= $this->escapeHtml($user->getEmail()); ?>
-                </a>
-            </td>
-            <td><?= $this->escapeHtml($user->getFullName()); ?></a>
-            </td>
-            <td><?= $this->escapeHtml($user->getStatusAsString()); ?></td>
-            <td><?= $this->escapeHtml($user->getGenderAsString()); ?></td>
-            <td>
-                <a class="btn btn-info" href="<?= $this->url('admin',
-                    ['action'=>'edit-user', 'id'=>$user->getId()]); ?>">
-                    <span class="glyphicon glyphicon-pencil" ></span> Edit
-                </a>
-                <a class="btn btn-default" href="<?= $this->url('admin',
-                    ['action'=>'change-password', 'id'=>$user->getId()]); ?>">
-                    <span class="glyphicon glyphicon-asterisk"></span> Change Password
-                </a>
-            </td>
-        </tr>
-
-    <?php endforeach; ?>
-
-</table>
-
-
-<h1>Manage Products</h1>
-
-
-<p>
-    <a class="btn btn-default" href="
-    <?= $this->url('admin', ['action'=>'add-product']); ?>">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New User
-    </a>
-</p>
-
-<table class="table table-striped">
-
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Subcategory</th>
-        <th>Category</th>
-        <th>Quantity</th>
-        <th>Actions</th>
-    </tr>
-
-    <?php foreach ($products as $product): ?>
-
-        <tr>
-            <td><?= $this->escapeHtml($product->getId()); ?></td>
-            <td><?= $this->escapeHtml($product->getName()); ?></td>
-            <td><?= $this->escapeHtml($product->getPrice()); ?></td>
-            <td><?= $this->escapeHtml($product->getSubcategory()->getName()); ?></td>
-            <td><?= $this->escapeHtml($product->getCategory()->getName()); ?></td>
-            <td><?= $this->escapeHtml($product->getQuantity()); ?></td>
-            <td>
-                <a class="btn btn-info" href="<?= $this->url('admin',
-                    ['action'=>'edit-product', 'id'=>$product->getId()]); ?>">
-                    <span class="glyphicon glyphicon-pencil" ></span> Edit
-                </a>
-                <a class="btn btn-default" href="<?= $this->url('admin',
-                    ['action'=>'delete-product', 'id'=>$product->getId()]); ?>">
-                    <span class="glyphicon glyphicon-asterisk"></span> Delete product
-                </a>
-            </td>
-        </tr>
-
-    <?php endforeach; ?>
-
-</table>
-
-
-<h1>Manage Orders</h1>
-
-
-
-<table class="table table-striped">
-
-    <tr>
-        <th>ID</th>
-        <th>User</th>
-        <th>Order costs</th>
-        <th>Order status</th>
-        <th>Products count</th>
-        <th>Actions</th>
-    </tr>
-
-    <?php foreach ($orders as $order): ?>
-
-        <tr>
-            <td><?= $this->escapeHtml($order->getId()); ?></td>
-            <td><?= $this->escapeHtml($order->getUser()->getEmail()); ?></td>
-            <td><?= $this->escapeHtml($order->getOrdercost()); ?></td>
-            <td><?= $this->escapeHtml($order->getStatus()->getName()); ?></td>
-            <td><?= $this->escapeHtml(count($order->getProducts())); ?></td>
-            <td>
-                <a class="btn btn-info" href="<?= $this->url('admin',
-                    ['action'=>'edit-order', 'id'=>$order->getId()]); ?>">
-                    <span class="glyphicon glyphicon-pencil" ></span> Edit
-                </a>
-                <a class="btn btn-default" href="<?= $this->url('admin',
-                    ['action'=>'delete-order', 'id'=>$order->getId()]); ?>">
-                    <span class="glyphicon glyphicon-asterisk"></span> Delete product
-                </a>
-            </td>
-        </tr>
-
-    <?php endforeach; ?>
-
-</table>
+        barChartOptions.datasetFill = false;
+        barChart.Bar(barChartData, barChartOptions);
+    });
+</script>

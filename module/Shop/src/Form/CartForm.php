@@ -50,7 +50,7 @@ class CartForm extends Form
             'type' => 'submit',
             'name' => 'order',
             'attributes' => [
-                'value' => 'Orders',
+                'value' => 'Place Order',
                 'id' => 'orderbutton',
             ],
         ]);

@@ -1,40 +1,13 @@
-<table class="table table-striped">
-<?php $form = $this->form ?>
-    <tr>
-        <th>Name</th>
-        <th>Start date</th>
-        <th>End date</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Image</th>
-        <th>Actions</th>
-    </tr>
+<?php
 
-    <?php foreach ($carts as $token=>$cart): ?>
-        <tr>
-            <td><?= $this->escapeHtml($cart->getProduct()); ?></td>
-            <td><?= $this->escapeHtml($cart->getStart()); ?></td>
-            <td><?= $this->escapeHtml($cart->getEnd()); ?></td>
-            <td><?= $this->escapeHtml($cart->getQty()); ?></td>
-            <td><?= $this->escapeHtml($cart->getPrice()); ?></td>
-            <td><?= $this->escapeHtml($cart->getLogo()); ?></td>
-        </tr>
+$form = $this->form;
+$form->get('order')->setAttributes([
+    'class'=>'order',
+]);
+$form->prepare();
 
-        <?= $this->form()->openTag($form); ?>
-        <?php $form->get('hiddentoken')->setValue($token);?>
-        <td>
-            <?= $this->formElement($form->get('hiddentoken')); ?>
-            <?= $this->formElement($form->get('update')); ?>
-            <?= $this->formElement($form->get('delete')); ?>
-        </td>
-        <?= $this->form()->closeTag(); ?>
-    <?php endforeach; ?>
+?>
 
-</table>
-<?= $this->escapeHtml($totalcost); ?>
-<?= $this->form()->openTag($form); ?>
-<?= $this->formElement($form->get('order')); ?>
-<?= $this->form()->closeTag(); ?>
 
 
 <div class="container">
@@ -97,7 +70,9 @@
 
 
             <div class="clearfix"></div>
-            <a class="order" href="#">Place Order</a>
+            <?= $this->form()->openTag($form); ?>
+            <?= $this->formElement($form->get('order')); ?>
+            <?= $this->form()->closeTag(); ?>
             <div class="total-item">
                 <h3>OPTIONS</h3>
                 <h4>COUPONS</h4>

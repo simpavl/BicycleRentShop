@@ -2,6 +2,7 @@
 
 namespace Shop\Controller\Factory;
 use Interop\Container\ContainerInterface;
+use Shop\Service\OrderManager;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Shop\Controller\AdminController;
 use Shop\Service\CategoryManager;
@@ -16,6 +17,7 @@ class AdminControllerFactory implements FactoryInterface
         $categoryManager = $container->get(CategoryManager::class);
         $userManager = $container->get(UserManager::class);
         $productManager = $container->get(ProductManager::class);
-        return new AdminController($entityManager, $categoryManager, $userManager, $productManager);
+        $orderManager = $container->get(OrderManager::class);
+        return new AdminController($entityManager, $categoryManager, $userManager, $productManager,$orderManager);
     }
 }

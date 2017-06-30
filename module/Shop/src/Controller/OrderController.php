@@ -53,7 +53,6 @@ class OrderController extends AbstractActionController
                 $data = $form->getData();
 
                 $this->orderManager->createorder($data,$carts,$this->productManager->gettotalcost($carts));
-                //return $this->redirect()->toRoute('admin');
             }
         }
         return new ViewModel(

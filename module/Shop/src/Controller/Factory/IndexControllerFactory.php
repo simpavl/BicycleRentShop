@@ -3,6 +3,7 @@
 namespace Shop\Controller\Factory;
 use Interop\Container\ContainerInterface;
 use Shop\Service\IndexManager;
+use Shop\Service\ProductManager;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Shop\Controller\IndexController;
 
@@ -12,7 +13,7 @@ class IndexControllerFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $indexManager = $container->get(IndexManager::class);
-
-        return new IndexController($entityManager,$indexManager);
+        $productManager = $container->get(ProductManager::class);
+        return new IndexController($entityManager,$indexManager,$productManager);
     }
 }

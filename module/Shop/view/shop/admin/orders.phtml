@@ -40,6 +40,10 @@
                                     ['action'=>'edit-order', 'id'=>$order->getId()]); ?>">
                                     <span class="glyphicon glyphicon-pencil" ></span> Edit
                                 </a>
+                                <a class="btn btn-info" href="<?= $this->url('admin',
+                                    ['action'=>'order-products', 'id'=>$order->getId()]); ?>">
+                                    <span class="glyphicon glyphicon-pencil" ></span> Products
+                                </a>
                                 <a class="btn btn-default" href="<?= $this->url('admin',
                                     ['action'=>'delete-order', 'id'=>$order->getId()]); ?>">
                                     <span class="glyphicon glyphicon-asterisk"></span> Delete product

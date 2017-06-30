@@ -26,7 +26,6 @@ class OrderManager
      */
     private $authService;
 
-    // Конструктор, используемый для внедрения зависимостей в сервис.
     public function __construct($authService, $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -63,7 +62,7 @@ class OrderManager
 
             $this->entityManager->persist($orderprods);
             $this->entityManager->flush();
-            var_dump($orderprods);
+            //var_dump($orderprods);
             $linker->setOrderid($neworder);
             $linker->setProductid($orderprods);
             $this->entityManager->persist($linker);
@@ -72,6 +71,47 @@ class OrderManager
         }
     }
 
+    public function updateOrder($order,$data){
+        $user = $this->entityManager->getRepository(User::class)->findOneByEmail($data['email']);
+        $status = $this->entityManager->getRepository(Status::class)->findOneById($data['status']);
+        //var_dump($user);
+        $order->setUser($user);
+        $order->setOrdercost($data['costs']);
+        $order->setStatus($status);
+        $this->entityManager->flush();
+    }
 
+    public function removeOrder($order,$linker)
+    {
+        foreach($linker as $link)
+        {
+            $product = $link->getProductid();
+            $this->entityManager->remove($link);
+            $this->entityManager->remove($product);
+        }
+        $this->entityManager->remove($order);
+        $this->entityManager->flush();
+    }
+
+    public function updateOrderProd($orderproduct,$data){
+        $status = $this->entityManager->getRepository(Status::class)->findOneById($data['status']);
+        $prod = $this->entityManager->getRepository(Product::class)->findOneById($data['product']);
+        $start = new \DateTime($data['start']);
+        $end = new \DateTime($data['end']);
+        //var_dump($user);
+        $orderproduct->setProduct($prod);
+        $orderproduct->setQuantity($data['quantity']);
+        $orderproduct->setStatus($status);
+        $orderproduct->setStartdate($start);
+        $orderproduct->setEnddate($end);
+        $this->entityManager->flush();
+    }
+
+    public function removeOrderProd($orderproduct,$linker)
+    {
+        $this->entityManager->remove($linker);
+        $this->entityManager->remove($orderproduct);
+        $this->entityManager->flush();
+    }
 
 }

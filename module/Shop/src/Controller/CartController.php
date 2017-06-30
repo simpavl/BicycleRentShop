@@ -21,6 +21,12 @@ class CartController extends AbstractActionController
 
     /**
      * Entity manager.
+     * @var \Shop\Service\OrderManager
+     */
+    private $orderManager;
+
+    /**
+     * Entity manager.
      * @var \Shop\Service\ProductManager
      */
     private $productManager;
@@ -28,9 +34,10 @@ class CartController extends AbstractActionController
     /**
      * Constructor is used for injecting dependencies into the controller.
      */
-    public function __construct($entityManager,$productManager)
+    public function __construct($entityManager,$orderManager,$productManager)
     {
         $this->entityManager = $entityManager;
+        $this->orderManager = $orderManager;
         $this->productManager = $productManager;
     }
 
@@ -39,29 +46,13 @@ class CartController extends AbstractActionController
         $carts = $this->ShoppingCart()->cart();
         $totalcost = $this->productManager->gettotalcost($carts);
         $form = new CartForm();
-
         if($this->getRequest()->isPost()) {
             $data = $this->params()->fromPost();
-
             $form->setData($data);
             if ($form->isValid()) {
                 $data = $form->getData();
-                var_dump($data);
-                if($data['update'])
-                {
-                    var_dump('UPDAAAAATE');
-                }
-                elseif ($data['delete'])
-                {
-                    var_dump('deeeeeeeeelete');
-                }
-                elseif ($data['order'])
-                {
-                    return $this->redirect()->toRoute('order');
-                }
-                else return false;
 
-                //return $this->redirect()->toRoute('admin');
+                $this->orderManager->createorder($data,$carts,$this->productManager->gettotalcost($carts));
             }
         }
         return new ViewModel(

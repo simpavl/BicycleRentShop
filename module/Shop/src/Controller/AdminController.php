@@ -2,10 +2,14 @@
 
 namespace Shop\Controller;
 
+use Shop\Entity\Order;
 use Shop\Entity\OrderProducts;
+use Shop\Entity\OrderProductsLinker;
 use Shop\Entity\ProductImage;
 use Shop\Entity\ProductImageLinker;
 use Shop\Form\CategoryForm;
+use Shop\Form\EditOrderForm;
+use Shop\Form\OrderProductsForm;
 use Shop\Form\ProductCategoryFirstForm;
 use Shop\Form\ProductCategorySecondForm;
 use Shop\Form\ProductImageForm;
@@ -56,12 +60,20 @@ class AdminController extends AbstractActionController
 
     private $productManager;
 
-    public function __construct($entityManager, $categoryManager, $userManager,$productManager)
+    /**
+     * AdminController constructor.
+     * @var \Shop\Service\OrderManager
+     */
+
+    private $orderManager;
+
+    public function __construct($entityManager, $categoryManager, $userManager,$productManager, $orderManager)
     {
         $this->entityManager = $entityManager;
         $this->categoryManager = $categoryManager;
         $this->userManager = $userManager;
         $this->productManager = $productManager;
+        $this->orderManager = $orderManager;
     }
 
     public function indexAction()
@@ -73,9 +85,6 @@ class AdminController extends AbstractActionController
         $orders = $this->entityManager->getRepository(Orders::class)->findBy([], ['id' => 'ASC']);
         $orderprods = $this->entityManager->getRepository(OrderProducts::class)->findBy([], ['id' => 'ASC']);
         if ($this->identity()!=null) {
-            // Пользователь вошел на свой аккаунт.
-
-            // Извлекаем личность пользователя.
             $userEmail = $this->identity();
         } else{
             $userEmail = null;
@@ -165,7 +174,7 @@ class AdminController extends AbstractActionController
                 $data = $form->getData();
                 $this->categoryManager->updateCategory($category,$data);
 
-                return $this->redirect()->toRoute('shop');
+                return $this->redirect()->toRoute('admin', ['action' => 'categories']);
             }
         } else {
             $data = [
@@ -187,7 +196,7 @@ class AdminController extends AbstractActionController
             return;
         }
         $this->categoryManager->removeCategory($category);
-        return $this->redirect()->toRoute('shop');
+        return $this->redirect()->toRoute('admin',['action'=>'categories']);
     }
     public function addSubCategoryAction()
     {
@@ -264,27 +273,13 @@ class AdminController extends AbstractActionController
 
     public function addUserAction()
     {
-        // Create user form
         $form = new UserForm('create', $this->entityManager);
-
-        // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
-
-            // Fill in the form with POST data
             $data = $this->params()->fromPost();
-
             $form->setData($data);
-
-            // Validate form
             if($form->isValid()) {
-
-                // Get filtered and validated data
                 $data = $form->getData();
-
-                // Add user.
                 $user = $this->userManager->addUser($data);
-
-                // Redirect to "view" page
                 return $this->redirect()->toRoute('admin',
                     ['action'=>'view-user', 'id'=>$user->getId()]);
             }
@@ -331,27 +326,14 @@ class AdminController extends AbstractActionController
             return;
         }
 
-        // Create user form
         $form = new UserForm('update', $this->entityManager, $user);
 
-        // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
-
-            // Fill in the form with POST data
             $data = $this->params()->fromPost();
-
             $form->setData($data);
-
-            // Validate form
             if($form->isValid()) {
-
-                // Get filtered and validated data
                 $data = $form->getData();
-
-                // Update the user.
                 $this->userManager->updateUser($user, $data);
-
-                // Redirect to "view" page
                 return $this->redirect()->toRoute('admin',
                     ['action'=>'view-user', 'id'=>$user->getId()]);
             }
@@ -374,7 +356,6 @@ class AdminController extends AbstractActionController
     public function addProductAction()
     {
         $tempFile = null;
-        // Create user form
         $form = new ProductForm($this->entityManager);
         $prg = $this->fileprg($form);
         if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
@@ -389,23 +370,15 @@ class AdminController extends AbstractActionController
                 $data = $form->getData();
                 // Add user
                 $user = $this->productManager->addNewProduct($data);
-                //var_dump($data);
                 // Redirect to "view" page
                 return $this->redirect()->toRoute('admin');
             }
-            // Form not valid, but file uploads might be valid...
             // Get the temporary file information to show the user in the view
             $fileErrors = $form->get('image-file')->getMessages();
 
             if (empty($fileErrors)) {
                 $tempFile = $form->get('image-file')->getValue();
             }
-            /*if(!empty($tempFile)){
-                foreach($form->get('image-file')->getValue() as $tempImage)
-                {
-                    var_dump($tempImage['tmp_name']);
-                }
-            }*/
 
         }
 
@@ -437,9 +410,8 @@ class AdminController extends AbstractActionController
                 $data = $form->getData();
                 $this->productManager->updateProduct($product,$data);
 
-                return $this->redirect()->toRoute('admin/products');
+                return $this->redirect()->toRoute('admin',['action'=>'products']);
             }
-            // Form not valid, but file uploads might be valid...
             // Get the temporary file information to show the user in the view
             $fileErrors = $form->get('image-file')->getMessages();
 
@@ -575,4 +547,115 @@ class AdminController extends AbstractActionController
         return $this->redirect()->toRoute('admin');
     }
 
+    public function editOrderAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', -1);
+        if ($id<1) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+
+        $order = $this->entityManager->getRepository(Orders::class)
+            ->find($id);
+
+        if ($order == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        $form = new EditOrderForm($this->entityManager);
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid()) {
+                $data = $form->getData();
+                $this->orderManager->updateOrder($order,$data);
+                return $this->redirect()->toRoute('admin',
+                    ['action'=>'orders']);
+            }
+        } else {
+            $form->setData(array(
+                'email'=>$order->getUser()->getEmail(),
+                'costs'=>$order->getOrdercost(),
+                'status'=>$order->getStatus(),
+            ));
+        }
+
+        return new ViewModel(array(
+            'order' => $order,
+            'form' => $form
+        ));
+    }
+    public function deleteOrderAction()
+    {
+        $orderid = $this->params()->fromRoute('id', -1);
+        $linker = $this->entityManager->getRepository(OrderProductsLinker::class)->findBy(['orderid'=>$orderid],['orderid'=>'ASC']);
+
+        $order = $this->entityManager->getRepository(Orders::class)->findOneById($orderid);
+        if($order == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        $this->orderManager->removeOrder($order,$linker);
+        return $this->redirect()->toRoute('admin',['action'=>'orders']);
+    }
+    public function orderProductsAction()
+    {
+        $orderid = $this->params()->fromRoute('id', -1);
+        $products = null;
+        $order = $this->entityManager->getRepository(Orders::class)->findOneById($orderid);
+        if($orderid == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        $products = $order->getProducts();
+        return new ViewModel([
+            'products' => $products,
+            'orderid' => $orderid,
+        ]);
+    }
+    public function editOrderProdAction()
+    {
+        $form = new OrderProductsForm($this->entityManager);
+        $prodid = $this->params()->fromRoute('id', -1);
+
+        $product = $this->entityManager->getRepository(OrderProducts::class)->findOneById($prodid);
+        if($product == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        if ($this->getRequest()->isPost()) {
+            $data = $this->params()->fromPost();
+            $form->setData($data);
+            if($form->isValid()) {
+                $data = $form->getData();
+                $this->orderManager->updateOrderProd($product,$data);
+                return $this->redirect()->toRoute('admin',
+                    ['action'=>'orders']);
+            }
+        } else {
+            $form->setData(array(
+                'product'=>$product,
+                'quantity'=>$product->getQuantity(),
+                'status'=>$product->getStatus(),
+                'start'=>$product->getStartdate(),
+                'end'=>$product->getEnddate(),
+            ));
+        }
+        return new ViewModel([
+            'form' => $form,
+            'product' => $product,
+        ]);
+    }
+    public function deleteOrderProdAction()
+    {
+        $prodid = $this->params()->fromRoute('id', -1);
+        $linker = $this->entityManager->getRepository(OrderProductsLinker::class)->findOneBy(['productid'=>$prodid],['productid'=>'ASC']);
+        $prod = $this->entityManager->getRepository(OrderProducts::class)->findOneById($prodid);
+        if($prod == null) {
+            $this->getResponse()->setStatusCode(404);
+            return;
+        }
+        $this->orderManager->removeOrderProd($prod,$linker);
+        return $this->redirect()->toRoute('admin',['action'=>'orders']);
+    }
 }

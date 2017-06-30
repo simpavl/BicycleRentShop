@@ -1,0 +1,75 @@
+<?php
+
+$form = $this->form;
+$form->get('product')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Choose category here'
+]);
+$form->get('quantity')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Enter product name here'
+]);
+$form->get('status')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Enter price here'
+]);
+$form->get('start')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Enter description here'
+]);
+$form->get('end')->setAttributes([
+    'class'=>'form-control',
+    'placeholder'=>'Enter quantity here'
+]);
+$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
+$form->get('submit')->setValue('Save');
+$form->prepare();
+
+?>
+
+<h1>Edit product</h1>
+
+<p>
+    Enter new product details and click on the button.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('product')); ?>
+            <?= $this->formElement($form->get('product')); ?>
+            <?= $this->formElementErrors($form->get('product')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('quantity')); ?>
+            <?= $this->formElement($form->get('quantity')); ?>
+            <?= $this->formElementErrors($form->get('quantity')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('status')); ?>
+            <?= $this->formElement($form->get('status')); ?>
+            <?= $this->formElementErrors($form->get('status')); ?>
+        </div>
+
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('start')); ?>
+            <?= $this->formElement($form->get('start')); ?>
+            <?= $this->formElementErrors($form->get('start')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('end')); ?>
+            <?= $this->formElement($form->get('end')); ?>
+            <?= $this->formElementErrors($form->get('end')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('submit')); ?>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>

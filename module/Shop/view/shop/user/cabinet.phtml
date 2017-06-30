@@ -2,52 +2,92 @@
 
 $form = $this->form;
 $form->get('first_name')->setAttributes([
-    'class'=>'form-control',
-    'placeholder'=>'Enter firstname here'
+    'placeholder'=>'Enter firstname here',
+    'class' => 'form-control'
 ]);
 $form->get('last_name')->setAttributes([
-    'class'=>'form-control',
-    'placeholder'=>'Enter last name here'
+    'placeholder'=>'Enter last name here',
+    'class' => 'form-control'
 ]);
 $form->get('gender')->setAttributes([
-    'class'=>'form-control',
-    'placeholder'=>'Select gender here'
+    'placeholder'=>'Select gender here',
+    'class' => 'form-control'
 ]);
-$form->get('submit')->setAttributes(['class' => 'btn btn-primary']);
-$form->get('submit')->setValue('Save');
+$form->get('submit')->setValue('Update info')->setAttributes(['class'=>'continue']);
 $form->prepare();
 
 ?>
 
-<h1>Edit user</h1>
 
-<p>
-    Enter new details
-</p>
 
-<div class="row">
-    <div class="col-md-6">
-        <?= $this->form()->openTag($form); ?>
 
-        <div class="form-group">
-            <?= $this->formLabel($form->get('first_name')); ?>
-            <?= $this->formElement($form->get('first_name')); ?>
-            <?= $this->formElementErrors($form->get('first_name')); ?>
+
+
+<div class="container">
+    <div class="check">
+        <h1>Orders list</h1>
+        <div class="col-md-9 cart-items">
+
+                <div class="cart-header">
+                    <div class="close"> </div>
+                    <div class="cart-sec simpleCart_shelfItem">
+
+                        <div class="cart-item-info">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>Order id</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Start date</th>
+                                    <th>End date</th>
+                                    <th>Status</th>
+                                </tr>
+                                <?php foreach ($prods as $prod): ?>
+                                    <tr>
+
+                                    <td><?= $prod->getOrder()->getId()?></td>
+                                    <td><?= $prod->getProduct()->getName()?></td>
+                                    <td><?= $prod->getQuantity()?></td>
+                                    <td><?= $prod->getStartdate()->format('d-m-Y H:i') ?></td>
+                                    <td><?= $prod->getEnddate()->format('d-m-Y H:i') ?></td>
+                                    <td><?= $prod->getStatus()->getName()?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+
+                        </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-3 cart-total">
+            <?= $this->form()->openTag($form); ?>
+            <?= $this->formElement($form->get('submit')); ?>
+            <div class="price-details">
+                <h3>First name</h3>
+                <?= $this->formElement($form->get('first_name')); ?>
+                <?= $this->formElementErrors($form->get('first_name')); ?>
+                <div class="clearfix"></div>
+            </div>
+            <div class="price-details">
+                <h3>Last name</h3>
+                <?= $this->formElement($form->get('last_name')); ?>
+                <?= $this->formElementErrors($form->get('last_name')); ?>
+                <div class="clearfix"></div>
+            </div>
+            <div class="price-details">
+                <h3>Gender</h3>
+                <?= $this->formElement($form->get('gender')); ?>
+                <?= $this->formElementErrors($form->get('gender')); ?>
+                <div class="clearfix"></div>
+            </div>
+            <?= $this->form()->closeTag(); ?>
+
+            <div class="clearfix"></div>
+
         </div>
 
-        <div class="form-group">
-            <?= $this->formLabel($form->get('last_name')); ?>
-            <?= $this->formElement($form->get('last_name')); ?>
-            <?= $this->formElementErrors($form->get('last_name')); ?>
-        </div>
-
-        <div class="form-group">
-            <?= $this->formLabel($form->get('gender')); ?>
-            <?= $this->formElement($form->get('gender')); ?>
-            <?= $this->formElementErrors($form->get('gender')); ?>
-        </div>
-        <?= $this->formElement($form->get('submit')); ?>
-
-        <?= $this->form()->closeTag(); ?>
+        <div class="clearfix"> </div>
     </div>
 </div>

@@ -21,6 +21,7 @@ class UserIdentity extends AbstractHelper
 
     private $user;
 
+
     public function __construct($entityManager, $authService)
     {
         $this->entityManager = $entityManager;
@@ -39,5 +40,7 @@ class UserIdentity extends AbstractHelper
     public function getFullName(){
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
+
+
 
 }

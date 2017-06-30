@@ -813,6 +813,7 @@ p.m_11 {
 	color: #000;
 	border: 1px solid #000;
 }
+
 .tags li a:hover {
 	color: #fff;
 	background:#EF5F21;
@@ -822,6 +823,8 @@ p.m_11 {
 .tags ul li:nth-child(4),.tags ul li:nth-child(8),.tags ul li:nth-child(12){
 	margin:0.5em 0 0;
 }
+
+
 /*----*/
 h3.cate {
 	color: #000;
@@ -1124,12 +1127,35 @@ p.tun{
   padding: 12px;
   border: none;
   background: #eeeeee;
- width: 77%;
+ width: 55%;
   margin-left: 13%;
   cursor:pointer;
 }
+.available ul li input {
+  outline: none;
+  padding: 12px;
+  border: none;
+  background: #eeeeee;
+ width: 55%;
+  margin-left: 11%;
+  cursor:pointer;
+}
+
+
+.available ul li input#end_cat {
+  margin-left: 13%;
+}
+
+.available ul li input#end {
+  margin-left: 12%;
+}
+
+.available ul li input#quantity {
+  margin-left: 12%;
+}
+
 .available ul li.size-in select {
-	  margin-left: 16%;
+	  margin-left: 10%;
 }
 .available {
   padding:  1em 0;
@@ -1149,7 +1175,7 @@ ul.tag-men li{
 ul.tag-men li span.women1{
 	  margin-left: 9em;
 }
-a.add-cart {
+button.add-cart {
   text-decoration: none;
   color: #fff;
   background: #EF5F21;
@@ -1159,7 +1185,7 @@ a.add-cart {
   margin-top: 2em;
   display: inline-block;
 }
-a.add-cart:hover {
+button.add-cart:hover {
   background:#000;
   
 }
@@ -1635,9 +1661,9 @@ a.create {
 .cart-header2 {  
   position: relative;  
 }
-a.order {
+input.order {
   background:#EF5F21;
-  padding: 10px 20px;
+  padding: 10px 90px;
    font-family: 'Lato', sans-serif;
   font-size: 1em;
   color: #fff;
@@ -1647,7 +1673,7 @@ a.order {
   text-align: center;
   margin:3em 0;
 }
-a.order:hover{
+input.order:hover{
 	background:#000;
 }
 .total-item,.cart-items{
@@ -1703,6 +1729,22 @@ a.continue{
    margin-bottom:2em;
 }
 a.continue:hover{
+	background:#000;
+}
+
+input.continue{
+	background:#EF5F21;
+	padding:10px 90px;
+	  font-family: 'Lato', sans-serif;
+	font-size:1em;
+	color:#fff;
+	text-decoration:none;
+	display: block;
+   font-weight: 600;  
+   text-align: center;
+   margin-bottom:2em;
+}
+input.continue:hover{
 	background:#000;
 }
 ul.total_price{

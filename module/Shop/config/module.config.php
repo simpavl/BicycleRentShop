@@ -35,7 +35,7 @@ return [
                     'category' => [
                         'type'    => Segment::class,
                         'options' => [
-                            'route' => '/category/[:id][/:page/:pageid]',
+                            'route' => '/category/:id',
                             'constraints' => [
                                 'id'     => '[0-9]+',
                                 'page'   => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -44,6 +44,24 @@ return [
                             'defaults' => [
                                 'controller' => Controller\IndexController::class,
                                 'action'     => 'category',
+                            ],
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'subcategory' => [
+                                'type'    => Segment::class,
+                                'options' => [
+                                    'route' => '/subcategory/:subid',
+                                    'constraints' => [
+                                        'sid'     => '[0-9]+',
+                                        'page'   => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                        'pageid' => '[0-9]+',
+                                    ],
+                                    'defaults' => [
+                                        'controller' => Controller\IndexController::class,
+                                        'action'     => 'subcategory',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -173,7 +191,8 @@ return [
                 'admin' => ['index', 'editSubCategory', 'addCategory', 'editCategory',
                     'deleteCategory','usersList', 'addUser', 'viewUser', 'editUser','editSubCategory',
                     'addSubCategory','addProduct','editProduct','categories','subcategories','users','products',
-                    'orders','productImages','addProductImages','editProdimg', 'removeProdimg'],
+                    'orders','productImages','addProductImages','editProdimg', 'removeProdimg','deleteProduct','editOrder'
+                    ,'deleteOrder','orderProducts','editOrderProd','deleteOrderProd'],
             ],
             Controller\ProductController::class => [
                 // Give access to "resetPassword", "message" and "setPassword" actions

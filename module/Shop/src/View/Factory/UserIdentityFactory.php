@@ -12,7 +12,6 @@ class UserIdentityFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $authService = $container->get(\Zend\Authentication\AuthenticationService::class);
-
         return new UserIdentity($entityManager,$authService);
     }
 }

@@ -19,7 +19,6 @@ class ProductManager
      */
     private $entityManager;
 
-    // Конструктор, используемый для внедрения зависимостей в сервис.
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
@@ -94,15 +93,22 @@ class ProductManager
         $this->entityManager->flush();
     }
 
-    public function sortProducts($data)
+    public function sortProducts($catid,$subcatid,$data)
     {
         $products = new Product();
-        $subcategory = $this->entityManager->getRepository(Subcategory::class)->findOneById($data['category']);
+        /*$subcategory = $this->entityManager->getRepository(Subcategory::class)->findOneById($data['category']);
         $category = $subcategory->getCategory()->getId();
         $subcategory = $subcategory->getId();
         //Getting Products Objects with filtered by user category
         $prodlist = $this->entityManager->getRepository(Product::class)->findBy(['category'=>$category, 'subcategory'=>$subcategory],['id'=>'ASC']);
-        //Getting object array with available products
+        //Getting object array with available products*/
+        if(!$subcatid)
+        {
+            $prodlist = $this->entityManager->getRepository(Product::class)->findBy(['category'=>$catid],['id'=>'ASC']);
+        }
+        else{
+            $prodlist = $this->entityManager->getRepository(Product::class)->findBy(['category'=>$catid, 'subcategory'=>$subcatid],['id'=>'ASC']);
+        }
         $prodlist = $this->checkavialable($prodlist, $data);
         //Getting object array with products that we can allow client to rent
         return $prodlist;
@@ -116,6 +122,7 @@ class ProductManager
         //var_dump($this->entityManager->getRepository(Orders::class)->findOneById('11')->getProducts());
         foreach ($prodlist as $product)
         {
+
             //getting array of active orders and that fits product id objects
             $ordprods = $this->entityManager->getRepository(OrderProducts::class)->findBy(['product' => $product->getId(), 'status' => 2],['id'=>'ASC']);
             //getting number of products in use during select by user range

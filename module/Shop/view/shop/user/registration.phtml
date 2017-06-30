@@ -1,8 +1,14 @@
+<?php
+
+$form = $this->form;
+$form->prepare();
+
+?>
 <!--content-->
 <div class=" container">
     <div class=" register">
         <h1>Register</h1>
-        <form>
+
             <div class="col-md-6 register-top-grid">
                 <h3>Personal infomation</h3>
                 <?= $this->form()->openTag($form); ?>
@@ -41,7 +47,7 @@
                 <?= $this->form()->closeTag(); ?>
             </div>
             <div class="clearfix"> </div>
-        </form>
+
     </div>
 </div>
 <!--//content-->

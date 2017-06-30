@@ -75,14 +75,14 @@ class UserManager
         $passwordHash = $bcrypt->create($data['password']);
         $user->setPassword($passwordHash);
 
-        $user->setUseractive($data['status']);
+        $user->setUseractive('1');
         $user->setRole('user');
         /*$currentDate = date('Y-m-d H:i:s');
         $user->setDateCreated($currentDate);*/
         // Add the entity to the entity manager.
         $this->entityManager->persist($user);
-        $linker->setUserid($user->getId());
-        $linker->setRoleid($userrole->getRoleid());
+        $linker->setUserid($user);
+        $linker->setRoleid($userrole);
         $this->entityManager->persist($linker);
         // Apply changes to database.
         $this->entityManager->flush();

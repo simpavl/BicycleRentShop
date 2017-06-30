@@ -2,6 +2,7 @@
 
 namespace Shop\Controller\Factory;
 use Interop\Container\ContainerInterface;
+use Shop\Service\OrderManager;
 use Shop\Service\ProductManager;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Shop\Controller\CartController;
@@ -12,7 +13,7 @@ class CartControllerFactory implements FactoryInterface
     {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $productManager = $container->get(ProductManager::class);
-
-        return new CartController($entityManager,$productManager);
+        $orderManager = $container->get(OrderManager::class);
+        return new CartController($entityManager,$orderManager,$productManager);
     }
 }
