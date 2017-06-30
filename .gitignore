@@ -6,3 +6,10 @@ data/cache/*
 phpunit.xml
 data/
 .idea/workspace.xml
+backup/
+module/Shop/src/Shop/Entity
+module/Admin/
+module/Album/
+module/Blog/
+module/Testmodule/
+module/zend-layout-change/
